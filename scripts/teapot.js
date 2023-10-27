@@ -42,7 +42,6 @@ function init() {
     
     light = new THREE.DirectionalLight(0xFFFFFF, 3.0);
     light.position.set(0.32, 0.39, 0.7);
-    const lightHelper = new THREE.DirectionalLightHelper(light, 1);
 
     
     // RENDERER
@@ -69,7 +68,6 @@ function init() {
     
     scene.add(ambientLight);
     scene.add(light);
-    scene.add(lightHelper); 
     
     // GUI
     setupGui();

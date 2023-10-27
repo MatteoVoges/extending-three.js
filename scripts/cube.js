@@ -34,8 +34,13 @@ const animate = () => {
     requestAnimationFrame(animate);
 
     // Rotate the cube
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    cube.rotation.y += 0.001;
+    cube.rotation.y += 0.002;
+    cube.rotation.z += 0.002;
+
+    // circle around the cube
+    camera.position.x = 2 * Math.sin(Date.now() / 1000);
+    camera.position.z = 2 * Math.cos(Date.now() / 1000) + 5;
 
     renderer.render(scene, camera);
 };
