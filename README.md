@@ -34,7 +34,7 @@ Their ability to model various shapes with few parameters makes them a natural c
 
 ## Demo Video
 
-(pending)
+Superquadrics are not implemented yet. See the latest results and the current progress at the [Demo Page](https://matteovoges.github.io/extending-three.js/).
 
 ## License
 
