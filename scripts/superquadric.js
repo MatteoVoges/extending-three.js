@@ -13,7 +13,7 @@ const scene = new THREE.Scene();
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 2;
+camera.position.z = 5;
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer();
@@ -33,16 +33,15 @@ const cameraControls = new OrbitControls(camera, renderer.domElement);
 cameraControls.addEventListener('change', render);
 
 // Define cube geometry and materials
-const geometry = new SuperquadricGeometry(1, 8, 8);
+const geometry = new SuperquadricGeometry();
 
 const materials = {};
 materials['wireframe'] = new THREE.MeshBasicMaterial({ wireframe: true });
-materials['flat'] = new THREE.MeshPhongMaterial({ specular: 0x000000, flatShading: true, side: THREE.DoubleSide });
+materials['flat'] = new THREE.MeshPhongMaterial({flatShading: true, side: THREE.DoubleSide });
 materials['smooth'] = new THREE.MeshLambertMaterial({ side: THREE.DoubleSide });
-materials['glossy'] = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide });
 
 // Create a cube with the materials
-const superquadric = new THREE.Mesh(geometry, materials['smooth']);
+const superquadric = new THREE.Mesh(geometry, materials['wireframe']);
 
 // Add the cube to the scene
 scene.add(superquadric);
