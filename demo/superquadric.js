@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { SuperquadricGeometry } from '../src/superquadric.js';
+
+import { SuperquadricGeometry } from '../src/superquadricGeometry.js';
 
 function render() {
   requestAnimationFrame(render);
