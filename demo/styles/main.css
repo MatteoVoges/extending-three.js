@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Monospace;
+    font-size: 13px;
+    line-height: 24px;
+    overscroll-behavior: none;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    background-color: #3498db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #2980b9;
+    transition: transform 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+
+.box:hover {
+    transform: scale(1.05);
+    background-color: #2980b9;
+}
+
+.box a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
