@@ -24,8 +24,8 @@ class SuperquadricGeometry extends BufferGeometry {
 		const indices = [];
 		const vertices = [];
 
-		const epsilon_1 = 1;
-		const epsilon_2 = 1;
+		const epsilon_1 = 0.1;
+		const epsilon_2 = 0.1;
 
 		const alpha = new Vector3(1.0, 1.0, 1.0);
 
@@ -54,6 +54,7 @@ class SuperquadricGeometry extends BufferGeometry {
 				vertices.push(vertex.x, vertex.y, vertex.z);
 				verticesRow.push(index++);
 			}
+			verticesRow.push(verticesRow.length - 1 - widthSegments);
 			grid.push(verticesRow);
 		}
 
@@ -86,11 +87,11 @@ class SuperquadricGeometry extends BufferGeometry {
 export { SuperquadricGeometry };
 
 function sin_epsilon(angle, epsilon) {
-	const sin_value = Math.sin(angle)
+	const sin_value = Math.sin(angle);
 	return Math.sign(sin_value) * Math.pow(Math.abs(sin_value), epsilon);
 }
 
 function cos_epsilon(angle, epsilon) {
-	const cos_value = Math.cos(angle)
+	const cos_value = Math.cos(angle);
 	return Math.sign(cos_value) * Math.pow(Math.abs(cos_value), epsilon);
 }
