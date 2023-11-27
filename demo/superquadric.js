@@ -13,13 +13,13 @@ function render() {
 const scene = new THREE.Scene();
 
 // Create a camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 1000);
 camera.position.z = 5;
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+renderer.setSize(1600, 871);
+document.getElementById("canvas").appendChild(renderer.domElement);
 
 // LIGHTS
 const ambientLight = new THREE.AmbientLight(0x7c7c7c, 3.0);

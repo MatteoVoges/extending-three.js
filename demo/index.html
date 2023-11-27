@@ -2,11 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Extending Three.js</title>
+    <title>Superquadrics - Demo</title>
     <link type="text/css" rel="stylesheet" href="./styles/main.css" />
-  </head>
-
-  <body>
     <script type="importmap">
       {
           "imports": {
@@ -14,9 +11,67 @@
                   "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
           }
       }
-  </script>
+    </script>
+    <script type="module" src="./superquadric.js"></script>
+  </head>
 
-  <script type="module" src="./superquadric.js"></script>
+  <body>
+    <!-- NAV-BAR -->
+    <div class="nav-bar">
+      <div class="nav-item">home</div>
+      <div class="nav-item">title</div>
+      <div class="nav-item">author</div>
+      <div class="nav-item">about</div>
+      <div class="nav-item">repository</div>
+    </div>
+    
+    <!-- CONTAINER -->
+    <div class="container">
+
+      <!-- CONTROLS -->
+      <div class="controls-container">
+        <span>Settings</span>
+        <!-- PARAMETERS -->
+        <div class="controls-category">
+          <span>Parameters</span>
+          <div class="control-item">
+            <span>Epsilon 1</span>
+            <input type="range" min="0" max="100" value="50" class="slider">
+          </div>
+          <div class="control-item">
+            <span>Epsilon 2</span>
+            <input type="range" min="0" max="100" value="50" class="slider">
+          </div>
+        </div>
+        <!-- SCALING -->
+        <div class="controls-category">
+          <span>Scale</span>
+          <div class="control-item">
+            <span>X</span>
+            <input type="range" min="0" max="100" value="50" class="slider">
+          </div>
+          <div class="control-item">
+            <span>Y</span>
+            <input type="range" min="0" max="100" value="50" class="slider">
+          </div>
+          <div class="control-item">
+            <span>Z</span>
+            <input type="range" min="0" max="100" value="50" class="slider">
+          </div>
+        </div>
+        <!-- LIGHTING -->
+        <!-- TODO -->
+      </div>
+
+      <!-- CANVAS -->
+      <div id="canvas"></div> 
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span>footer</span>
+    </div>
 
   </body>
 </html>
