@@ -16,13 +16,15 @@
   </head>
 
   <body>
-    <!-- NAV-BAR -->
-    <div class="nav-bar">
-      <div class="nav-item">home</div>
-      <div class="nav-item">title</div>
-      <div class="nav-item">author</div>
-      <div class="nav-item">about</div>
-      <div class="nav-item">repository</div>
+    <!-- TOP-BAR -->
+    <div class="top-bar">
+      <div class="title" href="">Extending Three.js - Demo - Superquadrics</div>
+      <div id="gradient"></div>
+      <div class="nav-bar">
+        <a class="nav-item" href="">Home</a>
+        <a class="nav-item" href="">About this Project</a>
+        <a class="nav-item" href="">Repository</a>
+      </div>
     </div>
     
     <!-- CONTAINER -->
@@ -30,33 +32,58 @@
 
       <!-- CONTROLS -->
       <div class="controls-container">
-        <span>Settings</span>
+        <div id="controls-headline">Settings</div>
         <!-- PARAMETERS -->
         <div class="controls-category">
-          <span>Parameters</span>
+          <div>Parameters</div>
           <div class="control-item">
-            <span>Epsilon 1</span>
-            <input type="range" min="0" max="100" value="50" class="slider">
+            <div class="number-input">
+              <div>Epsilon 1:</div>
+              <input type="input" value="1.00">
+            </div>
+            <input type="range" min="0" max="500" value="100">
           </div>
           <div class="control-item">
-            <span>Epsilon 2</span>
-            <input type="range" min="0" max="100" value="50" class="slider">
+            <div class="number-input">
+              <div>Epsilon 2:</div>
+              <input type="input" value="1.00">
+            </div>
+            <input type="range" min="0" max="500" value="100">
           </div>
         </div>
         <!-- SCALING -->
         <div class="controls-category">
-          <span>Scale</span>
+          <div>Parameters</div>
           <div class="control-item">
-            <span>X</span>
-            <input type="range" min="0" max="100" value="50" class="slider">
+            <div class="number-input">
+              <div>Epsilon 1:</div>
+              <input type="input" value="1.00">
+            </div>
+            <input type="range" min="0" max="500" value="100">
           </div>
           <div class="control-item">
-            <span>Y</span>
-            <input type="range" min="0" max="100" value="50" class="slider">
+            <div class="number-input">
+              <div>Epsilon 2:</div>
+              <input type="input" value="1.00">
+            </div>
+            <input type="range" min="0" max="500" value="100">
+          </div>
+        </div>
+        <div class="controls-category">
+          <div>Parameters</div>
+          <div class="control-item">
+            <div class="number-input">
+              <div>Epsilon 1:</div>
+              <input type="input" value="1.00">
+            </div>
+            <input type="range" min="0" max="500" value="100">
           </div>
           <div class="control-item">
-            <span>Z</span>
-            <input type="range" min="0" max="100" value="50" class="slider">
+            <div class="number-input">
+              <div>Epsilon 2:</div>
+              <input type="input" value="1.00">
+            </div>
+            <input type="range" min="0" max="500" value="100">
           </div>
         </div>
         <!-- LIGHTING -->
@@ -70,7 +97,7 @@
 
     <!-- FOOTER -->
     <div class="footer">
-      <span>footer</span>
+      <div>© 2023 Matteo Voges</div>
     </div>
 
   </body>

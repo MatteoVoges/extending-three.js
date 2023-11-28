@@ -24,8 +24,8 @@ class SuperquadricGeometry extends BufferGeometry {
 		const indices = [];
 		const vertices = [];
 
-		const epsilon_1 = 2;
-		const epsilon_2 = 2;
+		const epsilon_1 = 1;
+		const epsilon_2 = 1;
 
 		const alpha = new Vector3(1.0, 1.0, 1.0);
 
