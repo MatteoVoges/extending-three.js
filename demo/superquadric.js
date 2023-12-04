@@ -3,10 +3,27 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import { SuperquadricGeometry } from "../src/superquadricGeometry.js";
 
-let scene, camera, renderer, canvas;
+// Three.js variables
+let scene, camera, renderer, canvas, mesh;
+
+// Initialize Three.js
+init();
+superquadric(1.0, 1.0);
+render();
+
+// PARAMETERS
+const parameters = {
+	"epsilon_1": 1.0,
+	"epsilon_2": 1.0,
+	"scale_x": 1.0,
+	"scale_y": 1.0,
+	"scale_z": 1.0,
+};
+initValues();
+
+// FUNCTIONS
 
 function render() {
-//   requestAnimationFrame(render);
   renderer.render(scene, camera);
 }
 
@@ -50,18 +67,68 @@ function resizeCanvas() {
 	}
 
 	renderer.setSize(width, height, true);
+	render();
 }
 
 function superquadric(epsilon_1, epsilon_2) {
-	const geometry = new SuperquadricGeometry();
+
+	const geometry = new SuperquadricGeometry(32, 16, epsilon_1, epsilon_2);
 	const material = new THREE.MeshBasicMaterial({
 		color: 0xda610b,
 		wireframe: true,
 	});
-	const mesh = new THREE.Mesh(geometry, material);
+	mesh = new THREE.Mesh(geometry, material);
 	scene.add(mesh);
 }
 
-init();
-superquadric(0.5, 0.5);
-render();
+function initValues() {
+	for (const parameter in parameters) {
+		document.getElementById(parameter + "_field").addEventListener("change", function(event) {
+            updateValue(parameter, "field");
+        });
+		document.getElementById(parameter + "_slider").addEventListener("input",  function(event) {
+            updateValue(parameter, "slider");
+        });
+	}
+}
+
+function updateValue(id, type) {
+    const value = parseFloat(document.getElementById(id + "_" + type).value);
+
+	if (type == "field") {
+		document.getElementById(id + "_slider").value = (value * 100).toFixed(2);
+		document.getElementById(id + "_field").value = value.toFixed(2);
+		parameters[id] = value;
+	}
+	else if (type == "slider") {
+		document.getElementById(id + "_field").value = (value / 100).toFixed(2);
+		parameters[id] = value / 100;
+	}
+
+	if (id.startsWith("epsilon")) {
+		updateGeometry();
+	}
+
+	if (id.startsWith("scale")) {
+		updateScale();
+	}
+}
+
+function updateScale() {
+	const scale_x = parameters["scale_x"];
+	const scale_y = parameters["scale_y"];
+	const scale_z = parameters["scale_z"];
+
+	console.log(mesh)
+	mesh.scale.set(scale_x, scale_y, scale_z);
+	render();
+}
+
+function updateGeometry() {
+	const epsilon_1 = parameters["epsilon_1"];
+	const epsilon_2 = parameters["epsilon_2"];
+
+	scene.remove(mesh);
+	superquadric(epsilon_1, epsilon_2);
+	render();
+}

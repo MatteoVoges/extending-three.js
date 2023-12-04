@@ -108,13 +108,17 @@ body * {
     padding-bottom: 10px;
 }
 
-input[type=input] {
-    /* padding-left: 20px; */
-    width: 50px;
+.number-input div {
     flex-grow: 1;
+}
+
+input[type=input] {
+    width: 60px;
     border: none;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
     text-align: right;
     color: var(--text-color);
     background-color: var(--background-color);
@@ -122,6 +126,7 @@ input[type=input] {
 
 input[type=input]:focus {
     outline: none;
+    border: 1px solid var(--primary-color);
 }
 
 input[type=range] {

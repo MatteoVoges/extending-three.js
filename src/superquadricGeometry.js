@@ -2,7 +2,7 @@ import { BufferGeometry, Vector3, Float32BufferAttribute } from 'three';
 
 class SuperquadricGeometry extends BufferGeometry {
 
-	constructor(widthSegments = 32, heightSegments = 16) {
+	constructor(widthSegments = 32, heightSegments = 16, epsilon_1 = 1, epsilon_2 = 1) {
 
 		super();
 
@@ -24,11 +24,6 @@ class SuperquadricGeometry extends BufferGeometry {
 		const indices = [];
 		const vertices = [];
 
-		const epsilon_1 = 1;
-		const epsilon_2 = 1;
-
-		const alpha = new Vector3(1.0, 1.0, 1.0);
-
 		// generate vertices
 
 		for (let iy = 0; iy <= heightSegments; iy++) {
@@ -48,8 +43,6 @@ class SuperquadricGeometry extends BufferGeometry {
 				vertex.x = cos_epsilon(eta, epsilon_1) * cos_epsilon(omega, epsilon_2);
 				vertex.y = sin_epsilon(eta, epsilon_1);
 				vertex.z = cos_epsilon(eta, epsilon_1) * sin_epsilon(omega, epsilon_2);
-
-				vertex.multiply(alpha);
 
 				vertices.push(vertex.x, vertex.y, vertex.z);
 				verticesRow.push(index++);
