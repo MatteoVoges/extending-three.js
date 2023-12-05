@@ -1,4 +1,4 @@
-import {scene, mesh, helper, superquadric} from "./superquadric.js";
+import {scene, mesh, helper, points, superquadric} from "./superquadric.js";
 
 // PARAMETERS
 const parameters = {
@@ -39,6 +39,7 @@ function updateValue(id, type) {
 function updateGeometry() {
     scene.remove(helper);
 	scene.remove(mesh);
+	scene.remove(points);
 	superquadric();
 }
 

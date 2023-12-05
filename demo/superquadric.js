@@ -11,8 +11,8 @@ import {SuperquadricGeometry} from "../src/superquadricGeometry.js";
 import {initControls, parameters} from "./controls.js";
 
 // Three.js variables
-let scene, camera, renderer, canvas, stats, mesh, helper;
-export {scene, mesh, helper, superquadric};
+let scene, camera, renderer, canvas, stats, mesh, helper, points;
+export {scene, mesh, helper, points, superquadric};
 
 main();
 
@@ -22,6 +22,10 @@ function initCanvas() {
 
 	camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.1, 1000);
 	camera.position.z = 3;
+	camera.position.x = 1;
+	camera.position.y = 1;
+
+
 	camera.rotateZ(new THREE.Vector3(0, 10, 0));
 	// camera.updateProjectionMatrix();
 
@@ -57,14 +61,17 @@ function superquadric() {
 	const scale_y = parameters["scale_y"];
 	const scale_z = parameters["scale_z"];
 
-	const geometry = new SuperquadricGeometry(64, 32, epsilon_1, epsilon_2);
+	const geometry = new SuperquadricGeometry(epsilon_1, epsilon_2, 3, 2);
 	const material = new THREE.MeshBasicMaterial({
 		color: 0xda610b,
 		wireframe: true,
 	});
 	mesh = new THREE.Mesh(geometry, material);
-	mesh.scale.set(scale_x, scale_y, scale_z);
 	scene.add(mesh);
+	points = new THREE.Points(geometry,  new THREE.PointsMaterial( { size: 10, sizeAttenuation: false } ));
+	
+	mesh.scale.set(scale_x, scale_y, scale_z);
+	scene.add(points);
 	
 	helper = new VertexNormalsHelper(mesh, 0.1, 0xffffff, 1, false);
 	scene.add(helper);

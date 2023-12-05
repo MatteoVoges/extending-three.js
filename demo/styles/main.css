@@ -43,13 +43,13 @@ body * {
 }
 
 #gradient {
-    flex-grow: 1;
+    flex-grow: 0.5;
     background: linear-gradient(to right, var(--primary-color), var(--background-color));
 }
 
 .nav-bar {
     display: flex;
-    flex-grow: 0.5;
+    flex-grow: 1;
     justify-content: right;
 }
 
