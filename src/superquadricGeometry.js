@@ -23,6 +23,7 @@ class SuperquadricGeometry extends BufferGeometry {
 
 		const indices = [];
 		const vertices = [];
+		const normals = [];
 
 		// generate vertices
 
@@ -46,6 +47,13 @@ class SuperquadricGeometry extends BufferGeometry {
 
 				vertices.push(vertex.x, vertex.y, vertex.z);
 				verticesRow.push(index++);
+
+				let normal = new Vector3();
+				normal.x = cos_epsilon(eta, 2-epsilon_1) * cos_epsilon(omega, 2-epsilon_2);
+				normal.y = sin_epsilon(eta, 2-epsilon_1);
+				normal.z = cos_epsilon(eta, 2-epsilon_1) * sin_epsilon(omega, 2-epsilon_2);
+
+				normals.push(normal.x, normal.y, normal.z);
 			}
 			verticesRow.push(verticesRow.length - 1 - widthSegments);
 			grid.push(verticesRow);
@@ -73,6 +81,7 @@ class SuperquadricGeometry extends BufferGeometry {
 
 		this.setIndex(indices);
 		this.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+		this.setAttribute( 'normal', new Float32BufferAttribute( normals, 3 ) );
 	}
 
 }

@@ -138,7 +138,6 @@ input[type=range] {
     width: 80vw;
     height: var(--container-height);
     align-items: center;
-    display: flex;
 }
 
 .footer {
