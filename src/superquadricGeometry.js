@@ -48,9 +48,9 @@ class SuperquadricGeometry extends BufferGeometry {
 			const v = iy / heightSegments;
 			const eta = -Math.PI / 2 - v * Math.PI;
 
-			for (let ix = 0; ix < widthSegments; ix++) {
-				const u = ix / widthSegments;
-				const omega = u * 2 * Math.PI;
+			for (let ix = 0; ix <= widthSegments; ix++) {
+				const u = (ix+1) / widthSegments;
+				let omega = u * 2 * Math.PI;
 
 				// handle poles correctly
 				if (v == 0 || v == 1) {
@@ -103,7 +103,7 @@ class SuperquadricGeometry extends BufferGeometry {
 		// build geometry
 
 		this.setIndex(indices);
-		this.setAttribute("position", new Float32BufferAttribute(vertices, 3));
+		this.setAttribute("position", new Float32BufferAttribute(vertices.flat(), 3));
 		this.setAttribute("normal", new Float32BufferAttribute(normals, 3));
 	}
 

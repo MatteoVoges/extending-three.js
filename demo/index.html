@@ -37,14 +37,14 @@
         <div class="controls-category">
           <div>Parameters</div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Epsilon 1:</div>
               <input type="input" value="1.00" id="epsilon_1_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="epsilon_1_slider">
           </div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Epsilon 2:</div>
               <input type="input" value="1.00" id="epsilon_2_field">
             </div>
@@ -55,29 +55,63 @@
         <div class="controls-category">
           <div>Scale</div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Scale X - Axis:</div>
               <input type="input" value="1.00" id="scale_x_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="scale_x_slider">
           </div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Scale Y - Axis:</div>
               <input type="input" value="1.00" id="scale_y_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="scale_y_slider">
           </div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Scale Z - Axis:</div>
               <input type="input" value="1.00" id="scale_z_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="scale_z_slider">
           </div>
         </div>
-        <!-- LIGHTING -->
-        <!-- TODO -->
+        <!-- SHADING -->
+        <div class="controls-category">
+          <div>Shading</div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Shading:</div>
+              <select id="shading_option">
+                <option value="wireframe">wireframe</option>
+                <option value="flat">flat</option>
+                <option value="smooth">smooth</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- DEBUG -->
+        <div class="controls-category">
+          <div>Debug</div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Show Normals:</div>
+              <input type="checkbox" value="normals" id="debug_normals">
+            </div>
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Show UV-Coords:</div>
+              <input type="checkbox" value="normals" id="debug_uv">
+            </div>
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Show Bitangents:</div>
+              <input type="checkbox" value="normals" id="debug_bitangents">
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- CANVAS -->

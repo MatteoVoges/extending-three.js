@@ -24,11 +24,7 @@ function initCanvas() {
 	camera.position.z = 3;
 	camera.position.x = 1;
 	camera.position.y = 1;
-
-
 	camera.rotateZ(new THREE.Vector3(0, 10, 0));
-	// camera.updateProjectionMatrix();
-
 
 	renderer = new THREE.WebGLRenderer();
 	canvas = document.getElementById("canvas");
@@ -61,19 +57,16 @@ function superquadric() {
 	const scale_y = parameters["scale_y"];
 	const scale_z = parameters["scale_z"];
 
-	const geometry = new SuperquadricGeometry(epsilon_1, epsilon_2, 3, 2);
+	const geometry = new SuperquadricGeometry(epsilon_1, epsilon_2, 32, 16);
 	const material = new THREE.MeshBasicMaterial({
 		color: 0xda610b,
 		wireframe: true,
 	});
 	mesh = new THREE.Mesh(geometry, material);
-	scene.add(mesh);
-	points = new THREE.Points(geometry,  new THREE.PointsMaterial( { size: 10, sizeAttenuation: false } ));
-	
 	mesh.scale.set(scale_x, scale_y, scale_z);
-	scene.add(points);
+	scene.add(mesh);
 	
-	helper = new VertexNormalsHelper(mesh, 0.1, 0xffffff, 1, false);
+	helper = new VertexNormalsHelper(mesh, 0.5, 0x0000ff, 1, false);
 	scene.add(helper);
 }
 

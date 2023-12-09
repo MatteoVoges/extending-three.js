@@ -10,7 +10,7 @@
     --footer-height: 5vh;
     --nav-bar-height: 8vh;
     --container-height: 87vh;
-    --controls-container-width: 20vw;
+    --controls-container-width: 15vw;
 }
 
 
@@ -82,7 +82,7 @@ body * {
     color: var(--text-color);
     padding: 20px;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .controls-category {
@@ -96,26 +96,26 @@ body * {
 .control-item {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
     text-align: left;
     text-transform: none;
-    font-size: 20px;
+    font-size: 14px;
     color: var(--text-color);
 }
 
-.number-input {
+.aligned-input {
     display: flex;
     padding-bottom: 10px;
 }
 
-.number-input div {
+.aligned-input div {
     flex-grow: 1;
 }
 
 input[type=input] {
     width: 60px;
     border: none;
-    font-size: 20px;
+    font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
@@ -124,13 +124,23 @@ input[type=input] {
     background-color: var(--background-color);
 }
 
-input[type=input]:focus {
-    outline: none;
-    border: 1px solid var(--primary-color);
+input[type=range], input[type=checkbox] {
+    accent-color: var(--primary-color);
 }
 
-input[type=range] {
-    accent-color: var(--primary-color);
+select {
+    border: none;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border: 1px solid var(--primary-color);
 }
 
 #canvas {
