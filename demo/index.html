@@ -37,14 +37,14 @@
         <div class="controls-category">
           <div>Parameters</div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Epsilon 1:</div>
               <input type="input" value="1.00" id="epsilon_1_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="epsilon_1_slider">
           </div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Epsilon 2:</div>
               <input type="input" value="1.00" id="epsilon_2_field">
             </div>
@@ -55,29 +55,113 @@
         <div class="controls-category">
           <div>Scale</div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Scale X - Axis:</div>
               <input type="input" value="1.00" id="scale_x_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="scale_x_slider">
           </div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Scale Y - Axis:</div>
               <input type="input" value="1.00" id="scale_y_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="scale_y_slider">
           </div>
           <div class="control-item">
-            <div class="number-input">
+            <div class="aligned-input">
               <div>Scale Z - Axis:</div>
               <input type="input" value="1.00" id="scale_z_field">
             </div>
             <input type="range" min="0" max="500" value="100" id="scale_z_slider">
           </div>
         </div>
-        <!-- LIGHTING -->
-        <!-- TODO -->
+        <!-- RESOLUTION -->
+        <div class="controls-category">
+          <div>Resolution</div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Widthsegments:</div>
+              <input type="input" value="32" id="resolution_width_field">
+            </div>
+            <input type="range" min="4" max="128" value="32" id="resolution_width_slider">
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Heightsegments:</div>
+              <input type="input" value="16" id="resolution_height_field">
+            </div>
+            <input type="range" min="3" max="64" value="16" id="resolution_height_slider">
+          </div>
+        </div>
+        <!-- PHI & THETA -->
+        <div class="controls-category">
+          <div>Phi & Theta</div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Phi - Start:</div>
+              <input type="input" value="0.00" id="phi_start_field">
+            </div>
+            <input type="range" min="0" max="200" value="0" id="phi_start_slider">
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Phi - Length:</div>
+              <input type="input" value="2.00" id="phi_length_field">
+            </div>
+            <input type="range" min="0" max="200" value="200" id="phi_length_slider">
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Theta - Start:</div>
+              <input type="input" value="0.00" id="theta_start_field">
+            </div>
+            <input type="range" min="0" max="100" value="0" id="theta_start_slider">
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Theta - Length:</div>
+              <input type="input" value="1.00" id="theta_length_field">
+            </div>
+            <input type="range" min="0" max="100" value="100" id="theta_length_slider">
+          </div>
+        </div>
+        <!-- SHADING -->
+        <div class="controls-category">
+          <div>Shading</div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Shading:</div>
+              <select id="shading">
+                <option value="wireframe">wireframe</option>
+                <option value="flat">flat</option>
+                <option value="phong">phong</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- DEBUG -->
+        <div class="controls-category">
+          <div>Debug</div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Show Normals:</div>
+              <input type="checkbox" value="normals" id="debug_normals">
+            </div>
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Show UV-Coords:</div>
+              <input type="checkbox" value="normals" id="debug_uv">
+            </div>
+          </div>
+          <div class="control-item">
+            <div class="aligned-input">
+              <div>Show Bitangents:</div>
+              <input type="checkbox" value="normals" id="debug_bitangents">
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- CANVAS -->
