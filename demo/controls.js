@@ -1,4 +1,4 @@
-import {scene, mesh, helper, points, superquadric} from "./superquadric.js";
+import {superquadric} from "./superquadric.js";
 
 // PARAMETERS
 const parameters = {
@@ -7,40 +7,70 @@ const parameters = {
 	"scale_x": 1.0,
 	"scale_y": 1.0,
 	"scale_z": 1.0,
+	"resolution_width": 32,
+	"resolution_height": 16,
+	"phi_start": 0,
+	"phi_length": 2,
+	"theta_start": 0,
+	"theta_length": 1,
+	"shading": "wireframe",
+	"debug_normals": false,
+	"debug_uv": false,
+	"debug_bitangents": false,
 };
 
 function initControls() {
-	for (const parameter in parameters) {
-		document.getElementById(parameter + "_field").addEventListener("change", function(event) {
-            updateValue(parameter, "field");
+
+	// parameters + scale
+	for (const id of ["epsilon_1", "epsilon_2", "scale_x", "scale_y", "scale_z", "phi_start", "phi_length", "theta_start", "theta_length"]) {
+		document.getElementById(id + "_field").addEventListener("change", function(event) {
+			const value = parseFloat(event.target.value);
+            document.getElementById(id + "_slider").value = (value * 100).toFixed(2);
+			document.getElementById(id + "_field").value = value.toFixed(2);
+			parameters[id] = value;
+			superquadric();
         });
-		document.getElementById(parameter + "_slider").addEventListener("input", function(event) {
-            updateValue(parameter, "slider");
+		document.getElementById(id + "_slider").addEventListener("input", function(event) {
+            document.getElementById(id + "_field").value = (event.target.value / 100).toFixed(2);
+			parameters[id] = event.target.value / 100;
+			superquadric();
         });
 	}
-}
 
-function updateValue(id, type) {
-    const value = parseFloat(document.getElementById(id + "_" + type).value);
-
-	if (type == "field") {
-		document.getElementById(id + "_slider").value = (value * 100).toFixed(2);
-		document.getElementById(id + "_field").value = value.toFixed(2);
-		parameters[id] = value;
+	// resolution
+	for (const id of ["resolution_width", "resolution_height"]) {
+		document.getElementById(id + "_field").addEventListener("change", function(event) {
+			const value = parseInt(event.target.value);
+			document.getElementById(id + "_slider").value = value;
+			document.getElementById(id + "_field").value = value.toFixed(0);
+			parameters[id] = value;
+			superquadric();
+		});
+		document.getElementById(id + "_slider").addEventListener("input", function(event) {
+			document.getElementById(id + "_field").value = event.target.value;
+			parameters[id] = event.target.value;
+			superquadric();
+		});
 	}
-	else if (type == "slider") {
-		document.getElementById(id + "_field").value = (value / 100).toFixed(2);
-		parameters[id] = value / 100;
-	}
+	
+	// shading
+	document.getElementById("shading").addEventListener("change", function(event) {
+		parameters["shading"] = event.target.value;
+		superquadric();
+	});
+	
+	document.getElementById("debug_normals").addEventListener("change", function(event) {
+		parameters["debug_normals"] = event.target.checked;
+		superquadric();
+	});
 
-	updateGeometry();
-}
+	document.getElementById("debug_uv").addEventListener("change", function(event) {
+		parameters["debug_uv"] = event.target.checked;
+	});
 
-function updateGeometry() {
-    scene.remove(helper);
-	scene.remove(mesh);
-	scene.remove(points);
-	superquadric();
+	document.getElementById("debug_bitangents").addEventListener("change", function(event) {
+		parameters["debug_bitangents"] = event.target.checked;
+	});
 }
 
 export {initControls, parameters};

@@ -46,11 +46,11 @@ class SuperquadricGeometry extends BufferGeometry {
 			const verticesRow = [];
 
 			const v = iy / heightSegments;
-			const eta = -Math.PI / 2 - v * Math.PI;
+			const eta = thetaStart - Math.PI/2 + v * thetaLength;
 
 			for (let ix = 0; ix <= widthSegments; ix++) {
 				const u = (ix+1) / widthSegments;
-				let omega = u * 2 * Math.PI;
+				const omega = phiStart + u * phiLength;
 
 				// handle poles correctly
 				if (v == 0 || v == 1) {
@@ -93,10 +93,16 @@ class SuperquadricGeometry extends BufferGeometry {
 				const c = grid[iy + 1][ix];
 				const d = grid[iy + 1][ix + 1];
 
-				if (iy !== 0)
-					indices.push(a, b, d);
-				if (iy !== heightSegments - 1)
-					indices.push(b, c, d);
+				if ( iy == heightSegments - 1 ) {
+					if (thetaEnd == Math.PI)
+						indices.push( a, b, d );
+				} else if ( iy == 0) {
+					if (thetaStart == 0)
+						indices.push( b, c, d );
+				} else {
+					indices.push( a, b, d );
+					indices.push( b, c, d );
+				}
 			}
 		}
 

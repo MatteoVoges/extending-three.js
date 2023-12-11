@@ -11,8 +11,8 @@ import {SuperquadricGeometry} from "../src/superquadricGeometry.js";
 import {initControls, parameters} from "./controls.js";
 
 // Three.js variables
-let scene, camera, renderer, canvas, stats, mesh, helper, points;
-export {scene, mesh, helper, points, superquadric};
+let scene, camera, renderer, canvas, stats;
+export {superquadric};
 
 main();
 
@@ -37,7 +37,17 @@ function initCanvas() {
 	canvas.appendChild(stats.domElement);
 	resizeCanvas();
 	
-	scene.add(new THREE.HemisphereLight(0x8d8c7c, 0x494966, 3));
+	// const hemissphereLight = new THREE.HemisphereLight(0x8d8c7c, 0x494966, 3);
+	// scene.add(hemissphereLight);
+
+	const ambientLight = new THREE.AmbientLight(0x404040, 2);
+	scene.add(ambientLight);
+
+	const pointLight = new THREE.PointLight(0xffffff, 2, 0, 2)
+	pointLight.position.set(-2, 1, 1.5);
+	scene.add(pointLight);
+
+	scene.add(new THREE.PointLightHelper(scene.children[1], 0.1));
 
 	const grid = new THREE.GridHelper( 100, 100, 0x550000, 0x555555 );
 	grid.position.y = - 2;
@@ -50,24 +60,32 @@ function initCanvas() {
 // create superquadric
 function superquadric() {
 
-	const epsilon_1 = parameters["epsilon_1"];
-	const epsilon_2 = parameters["epsilon_2"];
+	// remove old objects
+	scene.remove(scene.getObjectByName("superquadric"));
+	scene.remove(scene.getObjectByName("normalHelper"));
 
-	const scale_x = parameters["scale_x"];
-	const scale_y = parameters["scale_y"];
-	const scale_z = parameters["scale_z"];
-
-	const geometry = new SuperquadricGeometry(epsilon_1, epsilon_2, 32, 16);
-	const material = new THREE.MeshBasicMaterial({
-		color: 0xda610b,
-		wireframe: true,
-	});
-	mesh = new THREE.Mesh(geometry, material);
-	mesh.scale.set(scale_x, scale_y, scale_z);
-	scene.add(mesh);
+	const geometry = new SuperquadricGeometry(parameters["epsilon_1"],  parameters["epsilon_2"], parameters["resolution_width"], parameters["resolution_height"], parameters["phi_start"]*Math.PI, parameters["phi_length"]*Math.PI, parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI);
 	
-	helper = new VertexNormalsHelper(mesh, 0.5, 0x0000ff, 1, false);
-	scene.add(helper);
+	let material;
+	if (parameters["shading"] == "wireframe") {
+		material = new THREE.MeshBasicMaterial({color: 0xda610b, wireframe: true});
+	} else if (parameters["shading"] == "flat") {
+		material = new THREE.MeshBasicMaterial({color: 0xda610b});
+	} else if (parameters["shading"] == "phong") {
+		material = new THREE.MeshPhongMaterial({color: 0xda610b});
+	}
+
+	const mesh = new THREE.Mesh(geometry, material);
+	mesh.scale.set(parameters["scale_x"], parameters["scale_y"], parameters["scale_z"]);
+	mesh.name = "superquadric";
+
+	scene.add(mesh);
+
+	if (parameters["debug_normals"]) {
+		const normalHelper = new VertexNormalsHelper(mesh, 0.1, 0xffffff, 1);
+		normalHelper.name = "normalHelper";
+		scene.add(normalHelper);
+	}
 }
 
 // resize canvas on window resize
@@ -94,7 +112,8 @@ function main() {
 	initCanvas();
 	initControls();
 
-	superquadric(1.0, 1.0);
+	// initialize superquadric with default values
+	superquadric();
 	
 	frame();
 }
