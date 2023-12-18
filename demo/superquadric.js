@@ -27,6 +27,7 @@ function initCanvas() {
 	camera.rotateZ(new THREE.Vector3(0, 10, 0));
 
 	renderer = new THREE.WebGLRenderer();
+	// renderer.setClearColor( 0xffffff, 1);
 	canvas = document.getElementById("canvas");
 	canvas.appendChild(renderer.domElement);
 	window.addEventListener("resize", resizeCanvas);
@@ -37,7 +38,7 @@ function initCanvas() {
 	canvas.appendChild(stats.domElement);
 	resizeCanvas();
 	
-	// const hemissphereLight = new THREE.HemisphereLight(0x8d8c7c, 0x494966, 3);
+	// const hemissphereLight = new THREE.HemisphereLight(0x8d8c7c);
 	// scene.add(hemissphereLight);
 
 	const ambientLight = new THREE.AmbientLight(0x404040, 2);
@@ -47,7 +48,7 @@ function initCanvas() {
 	pointLight.position.set(-2, 1, 1.5);
 	scene.add(pointLight);
 
-	scene.add(new THREE.PointLightHelper(scene.children[1], 0.1));
+	// scene.add(new THREE.PointLightHelper(scene.children[1], 0.1));
 
 	const grid = new THREE.GridHelper( 100, 100, 0x550000, 0x555555 );
 	grid.position.y = - 2;
@@ -69,10 +70,12 @@ function superquadric() {
 	let material;
 	if (parameters["shading"] == "wireframe") {
 		material = new THREE.MeshBasicMaterial({color: 0xda610b, wireframe: true});
+	} else if (parameters["shading"] == "color") {
+		material = new THREE.MeshBasicMaterial({color: 0xda610b, side: THREE.DoubleSide});
 	} else if (parameters["shading"] == "flat") {
-		material = new THREE.MeshBasicMaterial({color: 0xda610b});
+		material = new THREE.MeshPhongMaterial({color: 0xda610b, side: THREE.DoubleSide, flatShading: true});
 	} else if (parameters["shading"] == "phong") {
-		material = new THREE.MeshPhongMaterial({color: 0xda610b});
+		material = new THREE.MeshPhongMaterial({color: 0xda610b, side: THREE.DoubleSide});
 	}
 
 	const mesh = new THREE.Mesh(geometry, material);
