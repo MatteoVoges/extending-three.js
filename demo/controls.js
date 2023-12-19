@@ -15,8 +15,8 @@ const parameters = {
 	"theta_length": 1,
 	"shading": "wireframe",
 	"debug_normals": false,
-	"debug_uv": false,
-	"debug_bitangents": false,
+	// "debug_uv": false,
+	// "debug_bitangents": false,
 };
 
 function initControls() {
@@ -64,13 +64,13 @@ function initControls() {
 		superquadric();
 	});
 
-	document.getElementById("debug_uv").addEventListener("change", function(event) {
-		parameters["debug_uv"] = event.target.checked;
-	});
+	// document.getElementById("debug_uv").addEventListener("change", function(event) {
+	// 	parameters["debug_uv"] = event.target.checked;
+	// });
 
-	document.getElementById("debug_bitangents").addEventListener("change", function(event) {
-		parameters["debug_bitangents"] = event.target.checked;
-	});
+	// document.getElementById("debug_bitangents").addEventListener("change", function(event) {
+	// 	parameters["debug_bitangents"] = event.target.checked;
+	// });
 }
 
 export {initControls, parameters};
