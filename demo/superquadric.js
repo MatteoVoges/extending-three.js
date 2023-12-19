@@ -38,13 +38,13 @@ function initCanvas() {
 	canvas.appendChild(stats.domElement);
 	resizeCanvas();
 	
-	// const hemissphereLight = new THREE.HemisphereLight(0x8d8c7c);
-	// scene.add(hemissphereLight);
+	const hemissphereLight = new THREE.HemisphereLight();
+	scene.add(hemissphereLight);
 
-	const ambientLight = new THREE.AmbientLight(0x404040, 2);
+	const ambientLight = new THREE.AmbientLight(0x606060, 2);
 	scene.add(ambientLight);
 
-	const pointLight = new THREE.PointLight(0xffffff, 2, 0, 2)
+	const pointLight = new THREE.PointLight(0xffffff, 5)
 	pointLight.position.set(-2, 1, 1.5);
 	scene.add(pointLight);
 
@@ -70,8 +70,6 @@ function superquadric() {
 	let material;
 	if (parameters["shading"] == "wireframe") {
 		material = new THREE.MeshBasicMaterial({color: 0xda610b, wireframe: true});
-	} else if (parameters["shading"] == "color") {
-		material = new THREE.MeshBasicMaterial({color: 0xda610b, side: THREE.DoubleSide});
 	} else if (parameters["shading"] == "flat") {
 		material = new THREE.MeshPhongMaterial({color: 0xda610b, side: THREE.DoubleSide, flatShading: true});
 	} else if (parameters["shading"] == "phong") {
