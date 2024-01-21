@@ -171,10 +171,10 @@ export { SuperquadricGeometry };
 
 function sin_pow(angle, epsilon) {
 	const sin_value = Math.sin(angle);
-	return Math.sign(sin_value) * Math.pow(Math.abs(sin_value), epsilon);
+	return sin_value === 0 ? 0 : Math.sign(sin_value) * Math.pow(Math.abs(sin_value), epsilon);
 }
 
 function cos_pow(angle, epsilon) {
 	const cos_value = Math.cos(angle);
-	return Math.sign(cos_value) * Math.pow(Math.abs(cos_value), epsilon);
+	return cos_value === 0 ? 0 : Math.sign(cos_value) * Math.pow(Math.abs(cos_value), epsilon);
 }
