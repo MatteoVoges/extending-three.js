@@ -14,9 +14,10 @@ const parameters = {
 	"theta_start": 0,
 	"theta_length": 1,
 	"shading": "wireframe",
+	"debug_wireframe": false,
 	"debug_normals": false,
-	// "debug_uv": false,
-	// "debug_bitangents": false,
+	"debug_uv": false,
+	"debug_bitangents": false,
 };
 
 function initControls() {
@@ -59,18 +60,13 @@ function initControls() {
 		superquadric();
 	});
 	
-	document.getElementById("debug_normals").addEventListener("change", function(event) {
-		parameters["debug_normals"] = event.target.checked;
-		superquadric();
-	});
-
-	// document.getElementById("debug_uv").addEventListener("change", function(event) {
-	// 	parameters["debug_uv"] = event.target.checked;
-	// });
-
-	// document.getElementById("debug_bitangents").addEventListener("change", function(event) {
-	// 	parameters["debug_bitangents"] = event.target.checked;
-	// });
+	// debug
+	for (const id of ["debug_wireframe", "debug_normals", "debug_uv", "debug_bitangents"]) {
+		document.getElementById(id).addEventListener("change", function(event) {
+			parameters[id] = event.target.checked;
+			superquadric();
+		});
+	}
 }
 
 export {initControls, parameters};

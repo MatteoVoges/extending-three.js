@@ -26,60 +26,91 @@ class SuperquadricGeometry extends BufferGeometry {
 			thetaLength: Math.PI,
 		};
 
-		widthSegments = Math.max(4, Math.floor(widthSegments));
-		heightSegments = Math.max(3, Math.floor(heightSegments));
+		widthSegments = Math.max(4, Math.pow(2, Math.floor(Math.log2(widthSegments))));
+		heightSegments = Math.max(2, Math.pow(2, Math.floor(Math.log2(heightSegments))));
+
 
 		const thetaEnd = Math.min( thetaStart + thetaLength, Math.PI );
 		
 		let index = 0;
 		const grid = [];
 
+		const vertex = new Vector3();
+		const normal = new Vector3();
+
 		// buffers
 
 		const indices = [];
 		const vertices = [];
 		const normals = [];
+		const uvs = [];
 
-		// generate vertices
+		// generate vertices, normals and uvs
 
 		for (let iy = 0; iy <= heightSegments; iy++) {
+
 			const verticesRow = [];
 
 			const v = iy / heightSegments;
-			const eta = thetaStart - Math.PI/2 + v * thetaLength;
+			const eta = - Math.PI/2 + thetaStart + v * thetaLength;
+
+			// uv: special case for the poles
+			let uOffset = 0;
+			if ( iy === 0 && thetaStart === 0 ) {
+				uOffset = 0.5 / widthSegments;
+			} else if ( iy === heightSegments && thetaEnd === Math.PI ) {
+				uOffset = - 0.5 / widthSegments;
+			}
 
 			for (let ix = 0; ix <= widthSegments; ix++) {
 				const u = (ix+1) / widthSegments;
 				const omega = phiStart + u * phiLength;
 
-				// handle poles correctly
+				// handle edge cases correctly
 				if (v == 0 || v == 1) {
 					vertices.push(0, -1 + v * 2, 0);
 					normals.push(0, -1 + v * 2, 0);
 					verticesRow.push(index++);
+					uvs.push( u + uOffset, v );
 					continue;
 				}
+				// else if (v == 0.5 && u % 0.25 === 0) {
+				// 	let x = Math.cos( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength )
+				// 	let z = Math.sin( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength )
+				// 	vertices.push(x, 0, z);
+				// 	normals.push(x, 0, z);
+				// 	verticesRow.push(index++);
+				// 	uvs.push( u + uOffset, v );
+				// 	continue;
+				// }
 
 				// vertex
-				let vertex = new Vector3();
-				vertex.x = cos_epsilon(eta, epsilon_1) * cos_epsilon(omega, epsilon_2);
-				vertex.y = sin_epsilon(eta, epsilon_1);
-				vertex.z = cos_epsilon(eta, epsilon_1) * sin_epsilon(omega, epsilon_2);
+
+				vertex.x = cos_pow(eta, epsilon_1) * cos_pow(omega, epsilon_2);
+				vertex.y = sin_pow(eta, epsilon_1);
+				vertex.z = cos_pow(eta, epsilon_1) * sin_pow(omega, epsilon_2);
 
 				vertices.push(vertex.x, vertex.y, vertex.z);
 				
 				// normal
-				let normal = new Vector3();
-				normal.x = cos_epsilon(eta, 2 - epsilon_1) * cos_epsilon(omega, 2 - epsilon_2);
-				normal.y = sin_epsilon(eta, 2 - epsilon_1);
-				normal.z = cos_epsilon(eta, 2 - epsilon_1) * sin_epsilon(omega, 2 - epsilon_2);
-				
+
+				normal.x = cos_pow(eta, 2 - epsilon_1) * cos_pow(omega, 2 - epsilon_2);
+				normal.y = sin_pow(eta, 2 - epsilon_1);
+				normal.z = cos_pow(eta, 2 - epsilon_1) * sin_pow(omega, 2 - epsilon_2);
+
+				normal.normalize();
 				normals.push(normal.x, normal.y, normal.z);
 
+				// uv
+
+				uvs.push( u + uOffset, v);
+
 				verticesRow.push(index++);
+
 			}
 
 			grid.push(verticesRow);
+
 		}
 
 		// indices
@@ -109,8 +140,9 @@ class SuperquadricGeometry extends BufferGeometry {
 		// build geometry
 
 		this.setIndex(indices);
-		this.setAttribute("position", new Float32BufferAttribute(vertices.flat(), 3));
+		this.setAttribute("position", new Float32BufferAttribute(vertices, 3));
 		this.setAttribute("normal", new Float32BufferAttribute(normals, 3));
+		this.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
 	}
 
 	copy(source) {
@@ -137,12 +169,12 @@ class SuperquadricGeometry extends BufferGeometry {
 
 export { SuperquadricGeometry };
 
-function sin_epsilon(angle, epsilon) {
+function sin_pow(angle, epsilon) {
 	const sin_value = Math.sin(angle);
 	return Math.sign(sin_value) * Math.pow(Math.abs(sin_value), epsilon);
 }
 
-function cos_epsilon(angle, epsilon) {
+function cos_pow(angle, epsilon) {
 	const cos_value = Math.cos(angle);
 	return Math.sign(cos_value) * Math.pow(Math.abs(cos_value), epsilon);
 }

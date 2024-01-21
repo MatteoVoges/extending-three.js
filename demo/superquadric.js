@@ -11,7 +11,7 @@ import {SuperquadricGeometry} from "../src/superquadricGeometry.js";
 import {initControls, parameters} from "./controls.js";
 
 // Three.js variables
-let scene, camera, renderer, canvas, stats;
+let scene, camera, renderer, canvas, stats, debug_texture;
 export {superquadric};
 
 main();
@@ -20,7 +20,7 @@ main();
 function initCanvas() {
 	scene = new THREE.Scene();
 
-	camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.1, 1000);
+	camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.001, 1000);
 	camera.position.z = 3;
 	camera.position.x = 1;
 	camera.position.y = 1;
@@ -48,11 +48,15 @@ function initCanvas() {
 	pointLight.position.set(-2, 1, 1.5);
 	scene.add(pointLight);
 
-	// scene.add(new THREE.PointLightHelper(scene.children[1], 0.1));
+	const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.01);
+	scene.add(pointLightHelper);
 
 	const grid = new THREE.GridHelper( 100, 100, 0x550000, 0x555555 );
 	grid.position.y = - 2;
 	scene.add(grid);
+
+	const textureLoader = new THREE.TextureLoader();
+	debug_texture = textureLoader.load("uv_grid_opengl.jpg");
 
 	const cameraControls = new OrbitControls(camera, renderer.domElement);
 	cameraControls.addEventListener("change", render);
@@ -65,18 +69,30 @@ function superquadric() {
 	scene.remove(scene.getObjectByName("superquadric"));
 	scene.remove(scene.getObjectByName("normalHelper"));
 
-	const geometry = new SuperquadricGeometry(parameters["epsilon_1"],  parameters["epsilon_2"], parameters["resolution_width"], parameters["resolution_height"], parameters["phi_start"]*Math.PI, parameters["phi_length"]*Math.PI, parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI);
+	const geometry = new SuperquadricGeometry(
+		parameters["epsilon_1"],  parameters["epsilon_2"], 
+		parameters["resolution_width"], parameters["resolution_height"], 
+		parameters["phi_start"]*Math.PI, parameters["phi_length"]*Math.PI, 
+		parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI
+	);
+
+	// const geometry = new THREE.SphereGeometry(
+	// 	parameters["epsilon_1"],
+	// 	parameters["resolution_width"], parameters["resolution_height"], 
+	// 	parameters["phi_start"]*Math.PI, parameters["phi_length"]*Math.PI, 
+	// 	parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI
+	// );
 	
-	let material;
-	if (parameters["shading"] == "wireframe") {
-		material = new THREE.MeshBasicMaterial({color: 0xda610b, wireframe: true});
-	} else if (parameters["shading"] == "flat") {
-		material = new THREE.MeshPhongMaterial({color: 0xda610b, side: THREE.DoubleSide, flatShading: true});
-	} else if (parameters["shading"] == "phong") {
-		material = new THREE.MeshPhongMaterial({color: 0xda610b, side: THREE.DoubleSide});
-	}
+	let material = new THREE.MeshPhongMaterial({
+		color: parameters["debug_uv"] ? 0xffffff : 0xda610b,
+		side: THREE.DoubleSide,
+		wireframe: parameters["debug_wireframe"],
+		flatShading: parameters["shading"] == "flat" && !parameters["debug_wireframe"],
+		map: parameters["debug_uv"] ? debug_texture : null,
+	});
 
 	const mesh = new THREE.Mesh(geometry, material);
+	const points = new THREE.Points(geometry, new THREE.PointsMaterial({color: 0xfffffff, size: 0.05}));
 	mesh.scale.set(parameters["scale_x"], parameters["scale_y"], parameters["scale_z"]);
 	mesh.name = "superquadric";
 
@@ -94,6 +110,7 @@ function resizeCanvas() {
 	camera.aspect = canvas.clientWidth / canvas.clientHeight;
 	camera.updateProjectionMatrix();
 
+	stats.domElement.style.top = -canvas.clientHeight + 'px';
 	renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 }
 
