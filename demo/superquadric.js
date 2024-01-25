@@ -70,25 +70,20 @@ function superquadric() {
 	scene.remove(scene.getObjectByName("normalHelper"));
 
 	const geometry = new SuperquadricGeometry(
+		1.0,
 		parameters["epsilon_1"],  parameters["epsilon_2"], 
 		parameters["resolution_width"], parameters["resolution_height"], 
 		parameters["phi_start"]*Math.PI, parameters["phi_length"]*Math.PI, 
-		parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI
+		parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI,
+		parameters["debug_post_uv"]
 	);
-
-	// const geometry = new THREE.SphereGeometry(
-	// 	parameters["epsilon_1"],
-	// 	parameters["resolution_width"], parameters["resolution_height"], 
-	// 	parameters["phi_start"]*Math.PI, parameters["phi_length"]*Math.PI, 
-	// 	parameters["theta_start"]*Math.PI, parameters["theta_length"]*Math.PI
-	// );
 	
 	let material = new THREE.MeshPhongMaterial({
-		color: parameters["debug_uv"] ? 0xffffff : 0xda610b,
+		color: parameters["debug_uv"] || parameters["debug_post_uv"] ? 0xffffff : 0xda610b,
 		side: THREE.DoubleSide,
 		wireframe: parameters["debug_wireframe"],
 		flatShading: parameters["shading"] == "flat" && !parameters["debug_wireframe"],
-		map: parameters["debug_uv"] ? debug_texture : null,
+		map: parameters["debug_uv"] || parameters["debug_post_uv"] ? debug_texture : null,
 	});
 
 	const mesh = new THREE.Mesh(geometry, material);
