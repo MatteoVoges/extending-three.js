@@ -17,7 +17,7 @@ const parameters = {
 	"debug_wireframe": false,
 	"debug_normals": false,
 	"debug_uv": false,
-	"debug_bitangents": false,
+	"debug_post_uv": false,
 };
 
 function initControls() {
@@ -61,7 +61,7 @@ function initControls() {
 	});
 	
 	// debug
-	for (const id of ["debug_wireframe", "debug_normals", "debug_uv", "debug_bitangents"]) {
+	for (const id of ["debug_wireframe", "debug_normals", "debug_uv", "debug_post_uv"]) {
 		document.getElementById(id).addEventListener("change", function(event) {
 			parameters[id] = event.target.checked;
 			superquadric();
