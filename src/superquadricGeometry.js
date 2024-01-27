@@ -108,7 +108,7 @@ class SuperquadricGeometry extends BufferGeometry {
 					let post_v = 1 - longitude / Math.PI;
 
 					// edge cases (poles and dateline)
-					if (v == 0.0 || v == 1.0 || u == 1.0) post_u = u;
+					if (v == 0.0 || v == 1.0 || u == 1.0) post_u = u * phiLength / (2*Math.PI);
 
 					uvs.push(post_u, post_v);
 
