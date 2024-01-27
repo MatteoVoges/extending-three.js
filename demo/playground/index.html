@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Superquadrics - Demo</title>
+		<meta charset="utf-8">
+    	<link type="text/css" rel="stylesheet" href="../../main.css"/>
+	</head>
+
+	<body>
+		<script type="importmap">
+			{
+				"imports": {
+                    "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            	}
+			}
+		</script>
+
+		<script type="module">
+
+			import { superquadric } from './superquadric.js';
+			import { initCanvas, frame } from '../canvas.js';
+			import { createGUI } from './controls.js';
+
+			initCanvas();
+
+			// create gui
+			createGUI();
+
+			// initialize superquadric with default values
+			superquadric();
+			
+			// start render loop
+			frame();
+
+		</script>
+
+	</body>
+</html>
