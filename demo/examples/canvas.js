@@ -32,9 +32,6 @@ function initCanvas() {
 	pointLight.position.set(-2, 1, 1.5);
 	scene.add(pointLight);
 
-	// const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.01);
-	// scene.add(pointLightHelper);
-
     // grid / background
 	const grid = new THREE.GridHelper( 100, 100, 0x550000, 0x555555 );
     grid.position.y = -2;
