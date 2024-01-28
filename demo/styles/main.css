@@ -40,6 +40,8 @@ body * {
     background-color: var(--primary-color);
 }
 
+.fps > .fpsText { color: red; }
+
 #gradient {
     flex-grow: 0.5;
     background: linear-gradient(to right, var(--primary-color), var(--background-color));
@@ -66,7 +68,7 @@ body * {
 }
 
 #viewer {
-    height: calc(100vh - var(--nav-bar-height) - var(--footer-height));
+    height: calc(100vh - var(--nav-bar-height) - var(--footer-height) - 5px);
     width: 100%;
     border: none;
 }
