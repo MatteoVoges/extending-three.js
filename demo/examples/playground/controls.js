@@ -75,7 +75,7 @@ function initGUI () {
     // texture
     const textureFolder = gui.addFolder("Texture");
     textureFolder.add(settings, "uv_mode", ["legacy", "sphere mapped"]).onChange(updateGeometry);
-    textureFolder.add(settings, "texture", ["debug", "basketball", "wood", "brick", "aluminium", "white marble", "dark marble"]).onChange(updateTexture);
+    textureFolder.add(settings, "texture", ["debug", "basketball", "wood", "brick", "aluminium", "white marble", "dark marble"]).onChange(updateMaterial);
     textureFolder.add(settings, "upload_texture").onFinishChange(updateTexture);
 
     // debug

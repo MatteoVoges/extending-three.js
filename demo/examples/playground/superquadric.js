@@ -53,7 +53,6 @@ function updateMaterial () {
 	if (settings.material == "color") {
 		material.color.set(settings.color);
 	} else if (settings.material == "texture") {
-		console.log("call update texture", settings.texture, material);
 		updateTexture(material);
 	} else if (settings.material == "normal") {
 		material = new THREE.MeshNormalMaterial();
