@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 
 
@@ -20,6 +20,8 @@ function initCanvas() {
 
     // renderer
 	renderer = new THREE.WebGLRenderer();
+	renderer.setPixelRatio(window.devicePixelRatio);
+	document.body.appendChild(renderer.domElement);
 
     // lights
 	const hemissphereLight = new THREE.HemisphereLight();
@@ -40,14 +42,16 @@ function initCanvas() {
 	const cameraControls = new OrbitControls(camera, renderer.domElement);
 	cameraControls.addEventListener("change", render);
 
-    // exporting to dom, stats
-    document.body.appendChild(renderer.domElement);
+    // stats
 	stats = new Stats();
 	document.body.appendChild(stats.dom);
     
     // resize canvas with window
     window.addEventListener("resize", resizeCanvas);
 	resizeCanvas();
+
+	return scene;
+
 }
 
 // resize canvas on window resize
@@ -68,8 +72,11 @@ function frame() {
 	stats.update();
 	requestAnimationFrame(frame);
 
+	const superquadric = scene.getObjectByName("superquadric");
+	//superquadric.rotateY(0.001);
+
 	render();
 }
 
 
-export {scene, initCanvas, frame};
+export {initCanvas, frame};

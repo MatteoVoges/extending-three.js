@@ -25,12 +25,14 @@
 
 		<script type="module">
 
-			import { superquadric } from './superquadric.js';
 			import { initCanvas, frame } from '../canvas.js';
-			import { createGUI } from './controls.js';
+			import { initGUI } from './controls.js';
+			import { initSuperquadric } from './superquadric.js';
 
-			initCanvas();
-			createGUI();
+			const scene = initCanvas();
+			initGUI();
+			const superquadric = initSuperquadric();
+			scene.add(superquadric);
 			
 			// start render loop
 			frame();
