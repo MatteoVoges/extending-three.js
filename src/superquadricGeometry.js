@@ -15,7 +15,6 @@ function signed_pow(x, y) {
 
 class SuperquadricGeometry extends BufferGeometry {
 	constructor(
-		radius = 1,
 		epsilon_1 = 1.0,
 		epsilon_2 = 1.0,
 		widthSegments = 32,
@@ -24,7 +23,7 @@ class SuperquadricGeometry extends BufferGeometry {
 		phiLength = Math.PI * 2,
 		thetaStart = 0,
 		thetaLength = Math.PI,
-		post_uv = false,
+		post_uv = true,
 	) {
 
 		super();
@@ -32,7 +31,6 @@ class SuperquadricGeometry extends BufferGeometry {
 		this.type = "SuperquadricGeometry";
 
 		this.parameters = {
-			radius: radius,
 			epsilon_1: epsilon_1,
 			epsilon_2: epsilon_2,
 			widthSegments: widthSegments,
@@ -80,9 +78,9 @@ class SuperquadricGeometry extends BufferGeometry {
 
 				// vertex
 
-				vertex.x = - radius * signed_pow(Math.sin(eta), epsilon_1) * signed_pow(Math.cos(omega), epsilon_2);
-				vertex.y = radius * signed_pow(Math.cos(eta), epsilon_1);
-				vertex.z = radius * signed_pow(Math.sin(eta), epsilon_1) * signed_pow(Math.sin(omega), epsilon_2);
+				vertex.x = - signed_pow(Math.sin(eta), epsilon_1) * signed_pow(Math.cos(omega), epsilon_2);
+				vertex.y = signed_pow(Math.cos(eta), epsilon_1);
+				vertex.z = signed_pow(Math.sin(eta), epsilon_1) * signed_pow(Math.sin(omega), epsilon_2);
 
 				vertices.push(vertex.x, vertex.y, vertex.z);
 
@@ -166,7 +164,8 @@ class SuperquadricGeometry extends BufferGeometry {
 			data.phiStart,
 			data.phiLength,
 			data.thetaStart,
-			data.thetaLength
+			data.thetaLength,
+			data.post_uv,
 		);
 	}
 }
