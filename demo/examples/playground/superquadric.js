@@ -4,7 +4,7 @@ import {VertexNormalsHelper} from 'three/addons/helpers/VertexNormalsHelper.js';
 import { VertexTangentsHelper } from 'three/addons/helpers/VertexTangentsHelper.js';
 
 // geometry
-import {SuperquadricGeometry} from "/src/superquadricGeometry.js";
+import {SuperquadricGeometry} from "../../../src/superquadricGeometry.js";
 
 import {settings} from "./controls.js";
 
