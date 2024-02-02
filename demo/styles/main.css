@@ -67,6 +67,12 @@ body * {
     color: var(--text-color);
 }
 
+button {
+    background-color: var(--background-color);
+    border: none;
+    cursor: pointer;
+}
+
 #viewer {
     height: calc(100vh - var(--nav-bar-height) - var(--footer-height) - 5px);
     width: 100%;

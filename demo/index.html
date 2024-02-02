@@ -13,7 +13,9 @@
       <div class="title" href="">Extending Three.js - Demo - Superquadrics</div>
       <div id="gradient"></div>
       <div class="nav-bar">
-        <a class="nav-item" href="">Home</a>
+        <a class="nav-item" href="">Playground</a>
+        <!-- <button class="nav-item" onclick=" changeSrc('examples/playground/index.html')">Playground</button> -->
+        <button class="nav-item" onclick="changeSrc('examples/pbr/index.html')">PBR</button>
         <a class="nav-item" href="">About this Project</a>
         <a class="nav-item" href="">Repository</a>
       </div>
@@ -22,12 +24,19 @@
     <iframe src="examples/playground/index.html" id="viewer"></iframe>
 
     <script>
-      window.addEventListener("load", function () {
+      function applyPrimaryColor() {
         const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
         for (const e of document.getElementById("viewer").contentDocument.documentElement.getElementsByClassName("lil-gui")) {
           e.style.setProperty("--number-color", primaryColor);
         }
-      });
+      }
+
+      window.addEventListener("load", applyPrimaryColor);
+
+      function changeSrc(src) {
+        document.getElementById("viewer").src = src;
+        applyPrimaryColor();
+      };
     </script>
 
     <!-- FOOTER -->
