@@ -100,7 +100,7 @@ class SuperquadricGeometry extends BufferGeometry {
 					// calculate uv from coordinates / mapped sphere angles
 
 					const latitude = Math.atan2(vertex.z, vertex.x);
-					const longitude = Math.acos(vertex.y);
+					const longitude = Math.acos(vertex.y / vertex.length());
 
 					let post_u = 1 - (latitude + Math.PI) / (2*Math.PI);
 					let post_v = 1 - longitude / Math.PI;
