@@ -52,6 +52,7 @@ function updateMaterial () {
 	// material
 	if (settings.material == "color") {
 		material.color.set(settings.color);
+		material.side = THREE.DoubleSide;
 	} else if (settings.material == "texture") {
 		updateTexture(material);
 	} else if (settings.material == "normal") {
@@ -62,7 +63,6 @@ function updateMaterial () {
 	material.flatShading = (settings.shading == "flat");
 	
 	material.wireframe = settings.wireframe;
-	material.side = THREE.DoubleSide;
 
 	// update mesh
 	mesh.material.dispose();
@@ -96,25 +96,24 @@ function updateTexture (material) {
 
 function updateHelpers () {
 	let normalHelper = mesh.getObjectByName("normalHelper");
-	if (normalHelper == undefined) {
+	if (settings.normal_helper) {
+		mesh.remove(normalHelper);
 		normalHelper = new VertexNormalsHelper(mesh, 0.1);
 		normalHelper.name = "normalHelper";
 		mesh.add(normalHelper);
+	} else {
+		mesh.remove(normalHelper);
 	}
-
-	normalHelper.update();
-	normalHelper.visible = settings.normal_helper;
 
 	mesh.geometry.computeTangents();
 
 	let tangentHelper = mesh.getObjectByName("tangentHelper");
 	if (tangentHelper == undefined) {
-		tangentHelper = new VertexTangentsHelper(mesh, 0.1);
-		tangentHelper.name = "tangentHelper";
 		mesh.add(tangentHelper);
 	}
 
-	tangentHelper.update();
+	tangentHelper = new VertexTangentsHelper(mesh, 0.1);
+	tangentHelper.name = "tangentHelper";
 	tangentHelper.visible = settings.tangent_helper;
 
 }
