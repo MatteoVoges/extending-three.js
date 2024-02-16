@@ -72,9 +72,6 @@ function frame() {
 	stats.update();
 	requestAnimationFrame(frame);
 
-	const superquadric = scene.getObjectByName("superquadric");
-	//superquadric.rotateY(0.001);
-
 	render();
 }
 
