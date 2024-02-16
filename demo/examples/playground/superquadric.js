@@ -108,12 +108,12 @@ function updateHelpers () {
 	mesh.geometry.computeTangents();
 
 	let tangentHelper = mesh.getObjectByName("tangentHelper");
-	if (tangentHelper == undefined) {
+	if (settings.tangent_helper) {
+		mesh.remove(tangentHelper);
+		tangentHelper = new VertexTangentsHelper(mesh, 0.1);
+		tangentHelper.name = "tangentHelper";
 		mesh.add(tangentHelper);
+	} else {
+		mesh.remove(tangentHelper);
 	}
-
-	tangentHelper = new VertexTangentsHelper(mesh, 0.1);
-	tangentHelper.name = "tangentHelper";
-	tangentHelper.visible = settings.tangent_helper;
-
 }
