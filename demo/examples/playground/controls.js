@@ -86,7 +86,6 @@ function initGUI () {
     // general
     gui.add({reset: function() {gui.reset();}}, "reset").name("Reset values");
 
-    // gui.close();
 }
 
 export {initGUI, settings};
