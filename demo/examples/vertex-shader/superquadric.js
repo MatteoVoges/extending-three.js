@@ -2,6 +2,9 @@
 import * as THREE from "three";
 import {VertexNormalsHelper} from 'three/addons/helpers/VertexNormalsHelper.js';
 
+import {SuperquadricGeometry} from "../../../src/superquadricGeometry.js";
+
+
 // shaders
 import {fragmentShader, vertexShader} from "./shaders.js";
 
@@ -16,7 +19,7 @@ function initSuperquadric () {
 	mesh = new THREE.Mesh();
 	mesh.name = "superquadric";
 
-	const geometry = new THREE.SphereGeometry(1, 32, 32);
+	const geometry = new SuperquadricGeometry(1, 1, 32, 32);
 
 	const shaderMaterial = new THREE.ShaderMaterial({
 		vertexShader: vertexShader,
