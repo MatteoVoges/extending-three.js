@@ -4,13 +4,17 @@ uniform float epsilon_2;
 
 varying vec3 vNormal;
 
+const float tolerance = 1e-15;
+
 float signed_pow(float x, float y) {
+    if ( abs(round(x) - x) < tolerance ) x = round(x);
+
     return sign(x) * pow(abs(x), y);
 }
 
 void main() {
-    float eta = position.x * 3.14159;
-    float omega = position.y * 3.14159 * 2.0;
+    float eta = atan(position.z, position.x);
+    float omega = acos(position.y);
     
     vec3 newPosition;
     newPosition.x = -signed_pow(sin(eta), epsilon_1) * signed_pow(cos(omega), epsilon_2);
@@ -32,7 +36,7 @@ const fragmentShader = `
 varying vec3 vNormal;
 
 void main() {
-    gl_FragColor = vec4(1.0);
+    gl_FragColor = vec4(vNormal * 0.5 + 0.5, 1.0);
 }
 `
 
