@@ -20,7 +20,6 @@ function initCanvas() {
 
     // renderer
 	renderer = new THREE.WebGLRenderer();
-	renderer.precision = "highp";
 	renderer.setPixelRatio(window.devicePixelRatio);
 	document.body.appendChild(renderer.domElement);
 
