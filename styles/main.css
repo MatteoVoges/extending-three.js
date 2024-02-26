@@ -40,8 +40,6 @@ body * {
     background-color: var(--primary-color);
 }
 
-.fps > .fpsText { color: red; }
-
 #gradient {
     flex-grow: 0.5;
     background: linear-gradient(to right, var(--primary-color), var(--background-color));
@@ -67,16 +65,36 @@ body * {
     color: var(--text-color);
 }
 
-button {
-    background-color: var(--background-color);
-    border: none;
-    cursor: pointer;
+.example-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    height: calc(100vh - var(--nav-bar-height) - var(--footer-height) - 5px);
+    padding: 100px;
 }
 
-#viewer {
-    height: calc(100vh - var(--nav-bar-height) - var(--footer-height) - 5px);
+.example {
+    height: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    border: #fff 1px solid;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.example:hover {
+    transform: translateY(-10px);
+}
+
+.example-preview {
     width: 100%;
-    border: none;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.example-label {
+    padding: 15px;
+    text-align: center;
 }
 
 .footer {

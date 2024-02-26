@@ -14,17 +14,12 @@
       <div id="gradient"></div>
       <div class="nav-bar">
         <!-- NAVIGATION-ITEMS -->
-        <div class="nav-item" onclick="changeSrc('examples/playground/index.html')">Playground</div>
-        <div class="nav-item" onclick="changeSrc('examples/pbr-interactive/index.html')">PBR - Interactive</div>
-        <div class="nav-item" onclick="changeSrc('examples/pbr-materials/index.html')">PBR - Materials</div>
-        <div class="nav-item" onclick="changeSrc('examples/vertex-shader/index.html')">Vertex Shader</div>
-        <a class="nav-item" href="">About this Project</a>
-        <a class="nav-item" href="">Repository</a>
+        <a class="nav-item" href="">Back to Homepage</a>
       </div>
     </div>
     
     <!-- VIEWER -->
-    <iframe src="examples/playground/index.html" id="viewer"></iframe>
+    <iframe src="./playground.html" id="viewer"></iframe>
 
     <script>
       function applyPrimaryColor() {
@@ -35,11 +30,6 @@
       }
 
       window.addEventListener("load", applyPrimaryColor);
-
-      function changeSrc(src) {
-        document.getElementById("viewer").src = src;
-        applyPrimaryColor();
-      };
     </script>
 
     <!-- FOOTER -->

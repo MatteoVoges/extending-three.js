@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Superquadrics - Demo</title>
+    <link type="text/css" rel="stylesheet" href="./styles/main.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  </head>
+
+  <body>
+    <!-- TOP-BAR -->
+    <div class="top-bar">
+      <div class="title" href="">Extending Three.js - Demo - Superquadrics</div>
+      <div id="gradient"></div>
+      <div class="nav-bar">
+        <!-- NAVIGATION-ITEMS -->
+        <a class="nav-item" href="">About this Project</a>
+        <a class="nav-item" href="">Repository</a>
+      </div>
+    </div>
+    
+    <!-- EXAMPLE GRID -->
+    <div id="examples" class="example-grid"></div>
+    <script>
+      const examples = {
+        "Playground": "playground",
+        "PBR - Interactive": "pbr-interactive",
+        "PBR - Materials": "pbr-materials",
+        "Vertex Shader": "vertex-shader",
+        "a": "a",
+        "b": "b",
+        "c": "c",
+      }
+      
+      // autogenerate examples
+      for (const [name, src] of Object.entries(examples)) {
+        const gridItem = document.createElement("a");
+        gridItem.className = "example-link";
+        gridItem.href = `examples/${src}/index.html`;
+        gridItem.innerHTML = `
+        <div class="example">
+          <img src="examples/${src}/preview.png" alt="${name}" class="example-preview">
+          <label class="example-label">${name}</label class="example-label">
+        </div>
+        `;
+
+        document.getElementById("examples").appendChild(gridItem);
+      }
+
+    </script>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div>© 2024 Matteo Voges</div>
+    </div>
+
+  </body>
+</html>
