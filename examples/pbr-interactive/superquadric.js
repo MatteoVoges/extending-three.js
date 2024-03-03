@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
 // geometry
-import {SuperquadricGeometry} from "../../../src/superquadricGeometry.js";
+import {SuperquadricGeometry} from "../../src/superquadricGeometry.js";
 
 import {settings} from "./controls.js";
 import {cameraControls, scene} from "./canvas.js";

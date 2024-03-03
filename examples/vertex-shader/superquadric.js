@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import {VertexNormalsHelper} from 'three/addons/helpers/VertexNormalsHelper.js';
 
-import {SuperquadricGeometry} from "../../../src/superquadricGeometry.js";
+import {SuperquadricGeometry} from "../../src/superquadricGeometry.js";
 
 
 // shaders
