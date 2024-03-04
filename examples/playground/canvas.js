@@ -20,8 +20,8 @@ function initCanvas() {
 
     // renderer
 	renderer = new THREE.WebGLRenderer();
-	renderer.precision = "highp";
 	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setAnimationLoop(frame);
 	document.body.appendChild(renderer.domElement);
 
     // lights
@@ -71,7 +71,6 @@ function render() {
 // main render loop
 function frame() {
 	stats.update();
-	requestAnimationFrame(frame);
 
 	render();
 }
