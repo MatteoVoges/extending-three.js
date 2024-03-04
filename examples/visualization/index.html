@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Superquadrics - Demo - Visualization</title>
+		<meta charset="utf-8">
+	</head>
+
+	<style type="text/css">
+		:root {--primary-color: #2cc9ff;}
+		body {margin: 0;}
+		.lil-gui {--number-color: var(--primary-color);}
+		.title {color: var(--number-color);}
+		.name {text-transform: capitalize;}
+	</style>
+
+	<body>
+		<script type="importmap">
+			{
+				"imports": {
+                    "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            	}
+			}
+		</script>
+
+		<!-- <script type="module">
+
+			import { initCanvas, frame } from './canvas.js';
+			import { initSuperquadric } from './superquadric.js';
+
+			const scene = initCanvas();
+			const superquadric = initSuperquadric();
+			scene.add(superquadric);
+
+			// start render loop
+			frame();
+
+		</script> -->
+
+		<script type="module">
+
+			import * as THREE from 'three';
+			// Setup scene
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Define custom shader material
+const vertexShader = `
+    attribute float xOffset;
+    attribute float yOffset;
+    attribute float zOffset;
+    attribute float xLength;
+    attribute float yLength;
+    attribute float zLength;
+
+    void main() {
+        vec3 transformed = vec3(position.x, position.y, position.z);
+        transformed.x *= xLength;
+        // transformed.y *= yLength;
+        // transformed.z *= zLength;
+        // transformed += vec3(xOffset, yOffset, zOffset);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+		vec3 vcolor = vec3(xLength, yLength, zLength);
+    }
+`;
+
+const fragmentShader = `
+	in vec3 vColor;
+
+    void main() {
+        gl_FragColor = vec4(1.0, vColor.y, vColor.z, 1.0);
+    }
+`;
+
+const customMaterial = new THREE.ShaderMaterial({
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+});
+
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+
+const instancedGeometry = new THREE.InstancedBufferGeometry().copy(geometry);
+
+const xLengths = [];
+const yLengths = [];
+const zLengths = [];
+const xOffsets = [];
+const yOffsets = [];
+const zOffsets = [];
+for (let i = 0; i < 10; i++) {
+    xLengths.push(Math.random() * 2 + 1); // Random x length values between 1 and 3
+    yLengths.push(Math.random() * 2 + 1); // Random y length values between 1 and 3
+    zLengths.push(Math.random() * 2 + 1); // Random z length values between 1 and 3
+    xOffsets.push(Math.random() * 10 - 5); // Random x offset values
+    yOffsets.push(Math.random() * 10 - 5); // Random y offset values
+    zOffsets.push(Math.random() * 10 - 5); // Random z offset values
+}
+
+instancedGeometry.setAttribute('xLength', new THREE.InstancedBufferAttribute(new Float32Array(xLengths), 1)); // 1 value per instance
+instancedGeometry.setAttribute('yLength', new THREE.InstancedBufferAttribute(new Float32Array(yLengths), 1)); // 1 value per instance
+instancedGeometry.setAttribute('zLength', new THREE.InstancedBufferAttribute(new Float32Array(zLengths), 1)); // 1 value per instance
+instancedGeometry.setAttribute('xOffset', new THREE.InstancedBufferAttribute(new Float32Array(xOffsets), 1)); // 1 value per instance
+instancedGeometry.setAttribute('yOffset', new THREE.InstancedBufferAttribute(new Float32Array(yOffsets), 1)); // 1 value per instance
+instancedGeometry.setAttribute('zOffset', new THREE.InstancedBufferAttribute(new Float32Array(zOffsets), 1)); // 1 value per instance
+
+// Create instanced mesh
+const mesh = new THREE.InstancedMesh(instancedGeometry, customMaterial, 10); // 10 instances
+
+// Add mesh to scene
+scene.add(mesh);
+
+// Set camera position
+camera.position.z = 5;
+
+// Render loop
+function animate() {
+    requestAnimationFrame(animate);
+
+
+
+    renderer.render(scene, camera);
+}
+animate();
+		</script>
+
+	</body>
+</html>

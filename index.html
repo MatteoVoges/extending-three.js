@@ -35,7 +35,7 @@
 
 <script>
   function applyPrimaryColor() {
-    const primaryColor = "rgb(" +getComputedStyle(document.documentElement).getPropertyValue("--primary-color") +")";
+    const primaryColor = "rgb(" + getComputedStyle(document.documentElement).getPropertyValue("--primary-color") + ")";
     for (const e of document.getElementById("viewer-frame").contentDocument.documentElement.getElementsByClassName("lil-gui")) {
       e.style.setProperty("--number-color", primaryColor);
     }
@@ -65,6 +65,7 @@
     "PBR - Interactive": "pbr-interactive",
     "PBR - Materials": "pbr-materials",
     "Vertex Shader": "vertex-shader",
+    "Visualization": "visualization"
   }
   
   // autogenerate examples
