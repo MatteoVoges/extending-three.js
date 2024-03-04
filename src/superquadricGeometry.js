@@ -123,7 +123,7 @@ class SuperquadricGeometry extends BufferGeometry {
 
 		}
 
-		indices
+		// indices
 
 		for (let iy = 0; iy < heightSegments; iy++) {
 
