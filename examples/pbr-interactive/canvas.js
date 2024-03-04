@@ -11,7 +11,7 @@ function initCanvas() {
     // renderer
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setAnimationLoop(animate);
+    renderer.setAnimationLoop(frame);
 	document.body.appendChild(renderer.domElement);
 
     // scene
