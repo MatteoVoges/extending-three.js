@@ -1,4 +1,6 @@
 const vertexShader = `
+precision highp float;
+
 uniform float epsilon_1;
 uniform float epsilon_2;
 
@@ -30,6 +32,8 @@ void main() {
     superquadricPosition.y = signed_pow(cos(eta), epsilon_1);
     superquadricPosition.z = signed_pow(sin(eta), epsilon_1) * signed_pow(sin(omega), epsilon_2);
     if (u == 1.0) superquadricPosition.z = 0.0;
+
+    superquadricPosition += position;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(superquadricPosition, 1.0);
 

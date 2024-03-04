@@ -1,12 +1,65 @@
 // three js
 import * as THREE from "three";
 
-import {settings} from "./controls.js";
+export {DummyGeometry, SuperquadricMaterial};
 
-// shader
-import {vertexShader} from "./shader.js";
+const vertexShader = `
+precision highp float;
 
-export {initSuperquadric, updateUniforms};
+attribute float epsilon1;
+attribute float epsilon2;
+
+attribute float eta;
+attribute float omega;
+attribute float u;
+
+varying vec3 vViewPosition;
+varying vec3 vNormal;
+varying vec3 vWorldPosition;
+
+
+const float tolerance = 1e-15;
+
+float signed_pow(float x, float y) {
+    if ( abs(round(x) - x) < tolerance ) x = round(x);
+
+    if (x == 0.0) return 0.0;
+
+    return sign(x) * pow(abs(x), y);
+}
+
+void main() {
+
+    // updated position
+    
+    vec3 superquadricPosition;
+    superquadricPosition.x = -signed_pow(sin(eta), epsilon1) * signed_pow(cos(omega), epsilon2);
+    superquadricPosition.y = signed_pow(cos(eta), epsilon1);
+    superquadricPosition.z = signed_pow(sin(eta), epsilon1) * signed_pow(sin(omega), epsilon2);
+    if (u == 1.0) superquadricPosition.z = 0.0;
+
+    superquadricPosition += position;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(superquadricPosition, 1.0);
+
+
+    // updated normal
+
+    vec3 superquadricNormal;
+    superquadricNormal.x = - signed_pow(sin(eta), 2.0 - epsilon1) * signed_pow(cos(omega), 2.0 - epsilon2);
+    superquadricNormal.y = signed_pow(cos(eta), 2.0 - epsilon1);
+    superquadricNormal.z = signed_pow(sin(eta), 2.0 - epsilon1) * signed_pow(sin(omega), 2.0 - epsilon2);
+
+    vNormal = normalMatrix * superquadricNormal;
+
+    
+    // fragment shader variables
+
+    vec4 mvPosition = modelViewMatrix * vec4(superquadricPosition, 1.0);
+    vViewPosition = -mvPosition.xyz;
+    vWorldPosition = (modelMatrix * vec4(superquadricPosition, 1.0)).xyz;
+}
+`;
 
 
 class DummyGeometry extends THREE.BufferGeometry {
@@ -98,27 +151,6 @@ class SuperquadricMaterial extends THREE.ShaderMaterial {
 		this.vertexShader = vertexShader;
 		this.fragmentShader = THREE.ShaderLib[baseShader].fragmentShader;
 
-		this.uniforms = THREE.UniformsUtils.merge([
-			THREE.ShaderLib[baseShader].uniforms, 
-			{epsilon_1: { value: 1.0 }, epsilon_2: { value: 1.0 }}
-		]);
+		this.uniforms = THREE.ShaderLib[baseShader].uniforms;
 	}
-}
-
-
-let mesh;
-
-function initSuperquadric () {
-
-	const geometry = new DummyGeometry(1028, 512);
-	const material = new SuperquadricMaterial();
-
-	mesh = new THREE.Mesh(geometry, material);
-
-	return mesh;
-}
-
-function updateUniforms () {
-	mesh.material.uniforms.epsilon_1.value = settings.epsilon_1;
-	mesh.material.uniforms.epsilon_2.value = settings.epsilon_2;
 }

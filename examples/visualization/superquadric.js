@@ -1,39 +1,58 @@
 import * as THREE from 'three';
 
-import { SuperquadricGeometry } from '../../src/superquadricGeometry.js';
+import { DummyGeometry, SuperquadricMaterial } from './shader.js';
 
-function initSuperquadric() { 
+let mesh, debug_sphere, positionComputBuffer, epsilon1Attribute, epsilon2Attribute;
+const size = 10;
+const spacing = 1.5;
+
+function initSuperquadric() {
+
     
-    const geometry = new SuperquadricGeometry(4, 1);
-    geometry.epsilon_1 = 0.1;
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00}); 
-    const mesh = new THREE.InstancedMesh( geometry, material, 10);
+    const geometry = new DummyGeometry(64, 32);
+    const material = new SuperquadricMaterial();
+    mesh = new THREE.InstancedMesh( geometry, material, size**2);
 
-    const xLengths = [];
-    const yLengths = [];
-    const zLengths = [];
-    for (let i = 0; i < 10; i++) {
-        xLengths.push(Math.random() * 2 + 1);
-        yLengths.push(Math.random() * 2 + 1);
-        zLengths.push(Math.random() * 2 + 1);
-    }
-    const xLengthsAttribute = new THREE.InstancedBufferAttribute(new Float32Array(xLengths), 1);
-    const yLengthsAttribute = new THREE.InstancedBufferAttribute(new Float32Array(yLengths), 1);
-    const zLengthsAttribute = new THREE.InstancedBufferAttribute(new Float32Array(zLengths), 1);
-    mesh.setAttribute('xLength', xLengthsAttribute);
-    mesh.setAttribute('yLength', yLengthsAttribute);
-    mesh.setAttribute('zLength', zLengthsAttribute);
+    // position instances in a grid
+    positionComputBuffer = [];
 
-    // Set instance scales
-    const scale = new THREE.Vector3();
-    for (let i = 0; i < 10; i++) {
-        scale.set(
-            xLengths[i],
-            yLengths[i],
-            zLengths[i]
-        );
-        mesh.setMatrixAt(i, scale);
+    let i = 0;
+    for (let z = 0; z < size; z++) {
+        for (let x = 0; x < size; x++) {
+            const instancePosition = new THREE.Vector3();
+            instancePosition.x = (x - (size-1)/2) * spacing * 2;
+            instancePosition.y = 0;
+            instancePosition.z = (z - (size-1)/2) * spacing * 2;
+
+            positionComputBuffer.push(instancePosition.x, instancePosition.y, instancePosition.z);
+        }
     }
+
+    const positionAttribute = new THREE.InstancedBufferAttribute(new Float32Array(positionComputBuffer), 3);
+    mesh.geometry.setAttribute('position', positionAttribute);
+
+    // epsilon1 and epsilon2
+    const epsilon1ComputeBuffer = [];
+    const epsilon2ComputeBuffer = [];
+    
+    for (let i = 0; i < size**2; i++) {
+        epsilon1ComputeBuffer.push(Math.random() * 5);
+        epsilon2ComputeBuffer.push(Math.random() * 5);
+    }
+    epsilon1Attribute = new THREE.InstancedBufferAttribute(new Float32Array(epsilon1ComputeBuffer), 1);
+    epsilon2Attribute = new THREE.InstancedBufferAttribute(new Float32Array(epsilon2ComputeBuffer), 1);
+    mesh.geometry.setAttribute('epsilon1', epsilon1Attribute);
+    mesh.geometry.setAttribute('epsilon2', epsilon2Attribute);
+
+    // debug sphere
+    debug_sphere = new THREE.Mesh(
+        new THREE.SphereGeometry(1, 32, 32),
+        new THREE.MeshBasicMaterial({color: 0xff0000})
+    );
+    debug_sphere.position.y = 2;
+
+    mesh.add(debug_sphere);
+    
     
     return mesh;
 }
@@ -42,6 +61,22 @@ function initSuperquadric() {
 
 function animate() {
 
+    debug_sphere.position.x = Math.sin(performance.now() / 1000) * size/2 * spacing;
+    debug_sphere.position.z = Math.cos(performance.now() / 1000) * size/2 * spacing;
+
+    for (let i = 0; i < size**2; i++) {
+        // distance to debug sphere
+        const instancePosition = new THREE.Vector3().fromArray(positionComputBuffer, i*3);
+        const spherePosition = debug_sphere.position;
+        let distance = spherePosition.distanceTo(instancePosition);
+        distance = 5 / distance**2;
+
+        // epsilon1 and epsilon2
+        epsilon1Attribute.setX(i, distance);
+        epsilon2Attribute.setX(i, distance);
+    }
+    epsilon1Attribute.needsUpdate = true;
+    epsilon2Attribute.needsUpdate = true;
 }
 
 

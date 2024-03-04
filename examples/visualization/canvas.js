@@ -14,12 +14,13 @@ function initCanvas() {
 
     // camera
 	camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.001, 1000);
-    camera.position.set(0, 10, 0);
+    camera.position.set(0, 30, 0);
 
     // renderer
 	renderer = new THREE.WebGLRenderer();
+	renderer.precision = "highp";
 	renderer.setPixelRatio(window.devicePixelRatio);
-	renderer.setAnimationLoop(animate);
+	renderer.setAnimationLoop(frame);
 	document.body.appendChild(renderer.domElement);
 
     const cameraControls = new OrbitControls(camera, renderer.domElement);
@@ -28,15 +29,6 @@ function initCanvas() {
     // lights
 	const hemissphereLight = new THREE.HemisphereLight();
 	scene.add(hemissphereLight);
-
-    const pointLight = new THREE.PointLight(0xffffff, 5)
-	pointLight.position.set(-2, 1, 1.5);
-	scene.add(pointLight);
-
-    // grid / background
-	const grid = new THREE.GridHelper( 100, 100, 0x550000, 0x555555 );
-    grid.position.y = -2;
-	scene.add(grid);
 
     const directionalLight = new THREE.DirectionalLight();
     directionalLight.position.set(0, 10, 0);
