@@ -55,9 +55,7 @@ void main() {
     
     // fragment shader variables
 
-    vec4 mvPosition = modelViewMatrix * vec4(superquadricPosition, 1.0);
     vViewPosition = -mvPosition.xyz;
-    vWorldPosition = (modelMatrix * vec4(superquadricPosition, 1.0)).xyz;
 }
 `;
 
@@ -140,17 +138,13 @@ class DummyGeometry extends THREE.BufferGeometry {
 	}
 }
 
-class SuperquadricMaterial extends THREE.ShaderMaterial {
+class SuperquadricMaterial extends THREE.MeshPhongMaterial {
 	constructor (parameters) {
 		super(parameters);
 
-		const baseShader = "basic";
-
 		this.type = "SuperquadricMaterial";
 
-		this.vertexShader = vertexShader;
-		this.fragmentShader = THREE.ShaderLib[baseShader].fragmentShader;
+		// this.vertexShader = vertexShader;
 
-		this.uniforms = THREE.ShaderLib[baseShader].uniforms;
 	}
 }

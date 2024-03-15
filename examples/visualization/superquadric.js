@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import { DummyGeometry, SuperquadricMaterial } from './shader.js';
 
 let mesh, debug_sphere, positionComputBuffer, epsilon1Attribute, epsilon2Attribute;
-const size = 10;
-const spacing = 1.5;
+const size = 100;
+const spacing = 1;
 
 function initSuperquadric() {
 
@@ -69,7 +69,7 @@ function animate() {
         const instancePosition = new THREE.Vector3().fromArray(positionComputBuffer, i*3);
         const spherePosition = debug_sphere.position;
         let distance = spherePosition.distanceTo(instancePosition);
-        distance = 5 / distance**2;
+        distance = 20 / distance;
 
         // epsilon1 and epsilon2
         epsilon1Attribute.setX(i, distance);
