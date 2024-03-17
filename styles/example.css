@@ -1,5 +1,0 @@
-#viewer {
-    height: calc(100vh - var(--nav-bar-height) - var(--footer-height) - 5px);
-    width: 100%;
-    border: none;
-}

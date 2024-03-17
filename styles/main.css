@@ -1,13 +1,13 @@
 :root {
     /* COLORS */
     --primary-color: 218, 97, 11;
-    --secondary-color: 176, 176, 176;
+    --secondary-color: 156, 156, 156;
 
-    --background-color: 30, 30, 30;
-    --dark-background-color: 11, 23, 32;
-
-    --text-color: 255, 255, 255;
-    --dark-text-color: 136, 136, 136;
+    /* THEME */
+    --background-color: 255, 250, 240;
+    --dark-background-color: 210, 210, 220;
+    --text-color: 0, 0, 0;
+    --dark-text-color: 100, 100, 100;
 
     /* SIZES */
     --nav-bar-height: 70px;
@@ -49,8 +49,25 @@ body {
 }
 
 .nav-item:hover {
+    cursor: pointer;
     color: rgb(var(--primary-color));
     fill: rgb(var(--primary-color));
+}
+
+#theme-switch {
+    display: none;
+}
+
+.theme-switch-label {
+    width: 1em;
+}
+
+.theme-switch-label:hover {
+    cursor: pointer;
+}
+
+.fa-github {
+    font-size: 2em;
 }
 
 .content {
@@ -76,7 +93,6 @@ body {
 
 .example {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
     padding: 20px;
     background-color: rgba(var(--secondary-color), 0.2);
     border-radius: 20px;
@@ -85,10 +101,9 @@ body {
 }
 
 .example:hover {
-    transform: translateY(-0px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    background-color: rgba(var(--secondary-color), 0.4);
+    background-color: rgba(var(--secondary-color), 0.5);
     color: rgb(var(--primary-color))
 }
 
@@ -99,7 +114,6 @@ body {
 
 .example > div {
     text-decoration: none;
-
     font-size: 1.2em;
     margin-top: 12px;
 }
