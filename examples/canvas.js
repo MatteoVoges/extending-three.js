@@ -3,7 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 
 
-export let scene, camera, renderer, stats;
+export let scene, camera, cameraControls, renderer, stats;
 
 // intialize canvas, camera, scene, and renderer
 export function initCanvas(animate = () => {}) {
@@ -31,7 +31,7 @@ export function initCanvas(animate = () => {}) {
 	renderer.setPixelRatio(window.devicePixelRatio);
 	document.body.appendChild(renderer.domElement);
 
-	const cameraControls = new OrbitControls(camera, renderer.domElement);
+	cameraControls = new OrbitControls(camera, renderer.domElement);
 	cameraControls.addEventListener("change", render);
 
     // stats
