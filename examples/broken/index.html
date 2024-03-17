@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Superquadrics - Broken Shader</title>
+		<meta charset="utf-8">
+	</head>
+
+	<style type="text/css">
+		:root {--primary-color: #2cc9ff;}
+		body {margin: 0;}
+		.lil-gui {--number-color: var(--primary-color);}
+		.title {color: var(--number-color);}
+		.name {text-transform: capitalize;}
+	</style>
+
+	<body>
+		<script type="importmap">
+			{
+				"imports": {
+                    "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            	}
+			}
+		</script>
+
+		<script type="module">
+
+            // forum: https://discourse.threejs.org/t/error-while-trying-to-create-meshstandardmaterial-using-shaderlib/45454
+            // example: https://codesandbox.io/p/sandbox/gracious-kate-l9uyls?file=%2Fsrc%2FApp.tsx%3A25%2C12
+
+
+            import * as THREE from 'three';
+            import { initCanvas, scene } from "../canvas.js";
+
+            let mesh;
+            initCanvas();
+
+            // lights
+            const light = new THREE.PointLight(0xffffff, 1);
+            light.position.set(1, 1, 1);
+            scene.add(light);
+
+			const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.ShaderMaterial({
+                vertexShader: THREE.ShaderLib.phong.vertexShader,
+                fragmentShader: THREE.ShaderLib.phong.fragmentShader,
+                uniforms: THREE.ShaderLib.phong.uniforms
+            });
+
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+		</script>
+
+	</body>
+</html>
