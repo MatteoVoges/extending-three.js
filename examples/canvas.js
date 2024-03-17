@@ -3,10 +3,10 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 
 
-let scene, camera, renderer, stats;
+export let scene, camera, renderer, stats;
 
 // intialize canvas, camera, scene, and renderer
-function initCanvas() {
+export function initCanvas(animate = () => {}) {
 
     // scene
 	scene = new THREE.Scene();
@@ -19,26 +19,17 @@ function initCanvas() {
 	camera.rotateZ(new THREE.Vector3(0, 10, 0));
 
     // renderer
-	renderer = new THREE.WebGLRenderer();
+	renderer = new THREE.WebGLRenderer({ antialias: true, precision: "highp" });
+
+	renderer.setAnimationLoop(() => {
+		stats.update();
+		animate()	// call the animate function;
+		render();
+	});
+
+	setBackgroundColor();
 	renderer.setPixelRatio(window.devicePixelRatio);
-	renderer.setAnimationLoop(frame);
 	document.body.appendChild(renderer.domElement);
-
-    // lights
-	const hemissphereLight = new THREE.HemisphereLight();
-	scene.add(hemissphereLight);
-
-	const ambientLight = new THREE.AmbientLight(0x606060, 2);
-	scene.add(ambientLight);
-
-	const pointLight = new THREE.PointLight(0xffffff, 5)
-	pointLight.position.set(-2, 1, 1.5);
-	scene.add(pointLight);
-
-    // grid / background
-	const grid = new THREE.GridHelper( 100, 100, 0x550000, 0x555555 );
-    grid.position.y = -2;
-	scene.add(grid);
 
 	const cameraControls = new OrbitControls(camera, renderer.domElement);
 	cameraControls.addEventListener("change", render);
@@ -51,8 +42,10 @@ function initCanvas() {
     window.addEventListener("resize", resizeCanvas);
 	resizeCanvas();
 
-	return scene;
+	// register clean up callback
+	window.addEventListener("beforeunload", cleanUp);
 
+    render();
 }
 
 // resize canvas on window resize
@@ -63,17 +56,24 @@ function resizeCanvas() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+// set background color
+function setBackgroundColor() {
+	let backgroundColor = 0xffffff;
+
+	let darkTheme = parent.document.getElementById("theme-switch");
+	darkTheme = darkTheme != null ? darkTheme.checked : false;
+	if (darkTheme) backgroundColor = 0x000000;
+
+	renderer.setClearColor(new THREE.Color(backgroundColor), 1);
+}
+window.setBackgroundColorCallback = setBackgroundColor;
+
 // render scene
 function render() {
     renderer.render(scene, camera);
 }
 
-// main render loop
-function frame() {
-	stats.update();
-
-	render();
+function cleanUp() {
+	renderer.setAnimationLoop(null);
+	renderer.dispose();
 }
-
-
-export {initCanvas, frame};
