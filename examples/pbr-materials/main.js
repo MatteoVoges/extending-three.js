@@ -16,7 +16,7 @@ let camera, scene, renderer;
 let particleLight;
 let group;
 
-function init() {
+export function main() {
 
     container = document.createElement( 'div' );
     document.body.appendChild( container );
@@ -226,6 +226,3 @@ function render() {
     renderer.render( scene, camera );
 
 }
-
-
-export { init, animate }
