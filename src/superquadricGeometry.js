@@ -23,7 +23,6 @@ class SuperquadricGeometry extends BufferGeometry {
 		phiLength = Math.PI * 2,
 		thetaStart = 0,
 		thetaLength = Math.PI,
-		post_uv = true,
 	) {
 
 		super();
@@ -39,7 +38,6 @@ class SuperquadricGeometry extends BufferGeometry {
 			phiLength: phiLength,
 			thetaStart: thetaStart,
 			thetaLength: thetaLength,
-			post_uv: post_uv,
 		};
 
 		// round to the next power of 2
@@ -68,13 +66,11 @@ class SuperquadricGeometry extends BufferGeometry {
 
 			const verticesRow = [];
 
-			const v = iy / heightSegments;
-			const eta = thetaStart + v * thetaLength;
+			const eta = thetaStart + (iy / heightSegments) * thetaLength;
 
 			for (let ix = 0; ix <= widthSegments; ix++) {
 
-				const u = ix / widthSegments;
-				const omega = phiStart + u * phiLength;
+				const omega = phiStart + (ix / widthSegments) * phiLength;
 
 				// vertex
 
@@ -95,25 +91,17 @@ class SuperquadricGeometry extends BufferGeometry {
 
 				// uv
 
-				if (post_uv) {
+				// calculate uv from coordinates / mapped sphere angles
+				const latitude = Math.atan2(vertex.z, vertex.x);
+				const longitude = Math.acos(vertex.y / vertex.length());
 
-					// calculate uv from coordinates / mapped sphere angles
+				let u = 1 - (latitude + Math.PI) / (2*Math.PI);
+				let v = 1 - longitude / Math.PI;
 
-					const latitude = Math.atan2(vertex.z, vertex.x);
-					const longitude = Math.acos(vertex.y / vertex.length());
+				// edge cases (poles and dateline)
+				if (iy == 0.0 || iy == heightSegments || iy == heightSegments) u = omega / (2*Math.PI);
 
-					let post_u = 1 - (latitude + Math.PI) / (2*Math.PI);
-					let post_v = 1 - longitude / Math.PI;
-
-					// edge cases (poles and dateline)
-					if (v == 0.0 || v == 1.0 || u == 1.0) post_u = u * phiLength / (2*Math.PI);
-
-					uvs.push(post_u, post_v);
-
-				} else {
-					// linear uv
-					uvs.push(u, 1 - v);
-				}
+				uvs.push(u, v);
 
 				verticesRow.push(index++);
 
