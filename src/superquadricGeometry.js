@@ -95,11 +95,11 @@ class SuperquadricGeometry extends BufferGeometry {
 				const latitude = Math.atan2(vertex.z, vertex.x);
 				const longitude = Math.acos(vertex.y / vertex.length());
 
-				let u = 1 - (latitude + Math.PI) / (2*Math.PI);
-				let v = 1 - longitude / Math.PI;
+				let u = 1 - (0.5 * ((latitude / Math.PI) + 1));
+				let v = 1 - (longitude / Math.PI);
 
 				// edge cases (poles and dateline)
-				if (iy == 0.0 || iy == heightSegments || iy == heightSegments) u = omega / (2*Math.PI);
+				if (iy == 0.0 || iy == heightSegments || ix == widthSegments) {u = omega / (2*Math.PI);}
 
 				uvs.push(u, v);
 
