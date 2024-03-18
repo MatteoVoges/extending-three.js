@@ -65,6 +65,7 @@ const settings = {
 
     normal_helper: false,
     tangent_helper: false,
+	trace_point: true,
 };
 
 function updateGeometry () {
@@ -86,6 +87,8 @@ function updateGeometry () {
 	
 	// update helpers
 	updateHelpers();
+
+	if (settings.trace_point) tracePoint();
 }
 
 function updateMaterial () {
@@ -162,6 +165,22 @@ function updateHelpers () {
 	}
 }
 
+function tracePoint() {
+	const positions = mesh.geometry.attributes.position.array;
+
+	const row = 8;
+	const col = 24;
+	const index = (row * (settings.widthSegments + 1) + col) * 3;
+	const position = new THREE.Vector3(positions[index], positions[index+1], positions[index+2]);
+
+	const geometry = new THREE.SphereGeometry(0.01, 32, 32);
+	const material = new THREE.MeshBasicMaterial({color: 0xff0000});
+	const sphere = new THREE.Mesh(geometry, material);
+	sphere.position.copy(position);
+
+	scene.add(sphere);
+}
+
 function initGUI () {
 
     const gui = new GUI();
@@ -209,6 +228,7 @@ function initGUI () {
     const debugFolder = gui.addFolder("Debug");
     debugFolder.add(settings, "normal_helper").onChange(updateHelpers);
     debugFolder.add(settings, "tangent_helper").onChange(updateHelpers);
+	debugFolder.add(settings, "trace_point").onChange(tracePoint);
 
     // general
     gui.add({reset: function() {gui.reset();}}, "reset").name("Reset values");
