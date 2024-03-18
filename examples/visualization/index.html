@@ -24,17 +24,8 @@
 		</script>
 
 		<script type="module">
-
-			import { initCanvas, frame } from './canvas.js';
-			import { initSuperquadric } from './superquadric.js';
-
-			const scene = initCanvas();
-			const superquadric = initSuperquadric();
-			scene.add(superquadric);
-
-			// start render loop
-			frame();
-
+			import {main} from './main.js';
+			main();
 		</script>
 
 	</body>

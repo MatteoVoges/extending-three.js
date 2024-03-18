@@ -81,7 +81,7 @@ export class ExtendedSuperquadricBufferGeometry extends THREE.BufferGeometry {
 	}
 }
 
-let vertexShader = await fetch("/src/superquadricShader.glsl").then(response => response.text());
+const vertexShader = await fetch("/src/superquadricShader.glsl").then(response => response.text());
 
 export class SuperquadricMaterial extends THREE.ShaderMaterial {
 	constructor (parameters) {
@@ -100,5 +100,22 @@ export class SuperquadricMaterial extends THREE.ShaderMaterial {
 			{diffuse: { value: new THREE.Color(0xda610b)}},
 			{epsilon1: { value: 1.0 }, epsilon2: { value: 1.0 }}
 		]);
+	}
+}
+
+
+const instancedVertexShader = await fetch("/src/superquadricInstanceShader.glsl").then(response => response.text()); 
+
+export class SuperquadricInstanceMaterial extends THREE.ShaderMaterial {
+	constructor (parameters) {
+		super(parameters);
+
+		this.type = "SuperquadricInstanceMaterial";
+
+		// fetch vertex shader
+		this.vertexShader = instancedVertexShader;
+		this.fragmentShader = THREE.ShaderLib.phong.fragmentShader;
+		this.lights = true;
+		this.uniforms = THREE.ShaderLib.phong.uniforms;
 	}
 }

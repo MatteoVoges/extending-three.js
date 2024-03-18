@@ -4,8 +4,10 @@ attribute float eta;
 attribute float omega;
 attribute float u;
 
-uniform float epsilon1;
-uniform float epsilon2;
+attribute float epsilon1;
+attribute float epsilon2;
+
+// attribute vec3 instancePosition;
 
 varying vec3 vViewPosition;
 varying vec3 vNormal;
@@ -32,7 +34,9 @@ void main() {
     superquadricPosition.z = signed_pow(sin(eta), epsilon1) * signed_pow(sin(omega), epsilon2);
     if (u == 1.0) superquadricPosition.z = 0.0;
 
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(superquadricPosition, 1.0);
+    // superquadricPosition += instancePosition;
+
+    gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(superquadricPosition, 1.0);
 
 
     // updated normal
