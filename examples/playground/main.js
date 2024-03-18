@@ -36,6 +36,7 @@ export function main() {
 
 	updateGeometry();
 	updateMaterial();
+	tracePoint();
 }
 
 // SETTINGS
