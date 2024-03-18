@@ -83,9 +83,10 @@
       examples.style.display = "none";
       viewerFrame.src = path;
       homeButton.style.display = "flex";
-      window.location.hash = path;
       viewerFrame.style.display = "unset";
     }
+
+    window.location.hash = path;
   }
 
   const examples = {
