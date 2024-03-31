@@ -36,7 +36,6 @@ export function main() {
 
 	updateGeometry();
 	updateMaterial();
-	tracePoint();
 }
 
 // SETTINGS
@@ -66,7 +65,7 @@ const settings = {
 
     normal_helper: false,
     tangent_helper: false,
-	trace_point: true,
+	trace_point: false,
 };
 
 function updateGeometry () {
