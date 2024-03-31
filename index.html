@@ -15,7 +15,7 @@
     <span class="space-fill"></span>
     <span id="home-button" class="nav-item" onclick="changeView('home')" style="display: none;">Back to Overview</span>
     <a href="./README.md" target="viewer-frame" class="nav-item" onclick="changeView('README.md')">About this Project</a>
-    <span class="nav-item"><input type="checkbox" id="theme-switch"><label for="theme-switch" class="theme-switch-label"><i id="theme-switch-icon" class="fas fa-moon"></i></label></span>
+    <span class="nav-item" id="theme-switch"><input type="checkbox" id="theme-switch-checkbox"><label for="theme-switch-checkbox" class="theme-switch-label"><i id="theme-switch-icon" class="fas fa-moon"></i></label></span>
     <a href="https://github.com/MatteoVoges/extending-three.js" class="nav-item"><i class="fa-brands fa-github"></i></a>
   </div>
   
@@ -31,26 +31,34 @@
 </body>
 
 <script>
-  document.getElementById("viewer-frame").addEventListener("load", function() {
+  const viewerFrame = document.getElementById("viewer-frame");
+  const homeButton = document.getElementById("home-button");
+  const examplesContainer = document.getElementById("examples");
+  const themeSwitch = document.getElementById("theme-switch");
+  const themeSwitchIcon = document.getElementById("theme-switch-icon");
+  const themeSwitchCheckbox = document.getElementById("theme-switch-checkbox");
+
+  function applyPrimaryColor() {
     const primaryColor = "rgb(" + getComputedStyle(document.documentElement).getPropertyValue("--primary-color") + ")";
-    for (const e of document.getElementById("viewer-frame").contentDocument.documentElement.getElementsByClassName("lil-gui")) {
+    for (const e of document.getElementsByClassName("lil-gui")) {
       e.style.setProperty("--number-color", primaryColor);
     }
-  });
+  }
 
-  document.getElementById("theme-switch").addEventListener("change", function() {
-
+  function applyColorTheme() {
     let theme;
-    if (this.checked) {
+    if (themeSwitchCheckbox.checked) {
       // dark theme
-      document.getElementById("theme-switch-icon").classList.remove("fa-moon");
-      document.getElementById("theme-switch-icon").classList.add("fa-sun");
+      themeSwitchIcon.classList.remove("fa-moon");
+      themeSwitchIcon.classList.add("fa-sun");
       theme = {"background-color": "30, 30, 30", "dark-background-color": "11, 23, 32", "text-color": "255, 255, 255", "dark-text-color": "136, 136, 136"};
+      themeSwitchCheckbox.checked = false;
     } else {
       // light theme
-      document.getElementById("theme-switch-icon").classList.remove("fa-sun");
-      document.getElementById("theme-switch-icon").classList.add("fa-moon");
+      themeSwitchIcon.classList.remove("fa-sun");
+      themeSwitchIcon.classList.add("fa-moon");
       theme = {"background-color": "255, 250, 240", "dark-background-color": "210, 210, 220", "text-color": "0, 0, 0", "dark-text-color": "100, 100, 100"};
+      themeSwitchCheckbox.checked = true;
     }
 
     // apply theme
@@ -59,28 +67,26 @@
     }
 
     // change background color of renderer
-    const viewerFrame = document.getElementById("viewer-frame");
     if (viewerFrame.contentWindow.setBackgroundColorCallback) viewerFrame.contentWindow.setBackgroundColorCallback();
-  });
+  }
+
+  viewerFrame.addEventListener("load", applyPrimaryColor);
+  themeSwitch.addEventListener("click", applyColorTheme);
 
   // apply theme on load
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.getElementById("theme-switch").checked = true;
-    document.getElementById("theme-switch").dispatchEvent(new Event("change"));
+    themeSwitchCheckbox.checked = true;
+    applyColorTheme();
   }
 
   function changeView(path) {
-    const viewerFrame = document.getElementById("viewer-frame");
-    const examples = document.getElementById("examples");
-    const homeButton = document.getElementById("home-button");
-
     if (path === "home") {
       viewerFrame.src = "";
       viewerFrame.style.display = "none";
       homeButton.style.display = "none";
-      examples.style.display = "grid";
+      examplesContainer.style.display = "grid";
     } else {
-      examples.style.display = "none";
+      examplesContainer.style.display = "none";
       viewerFrame.src = path;
       homeButton.style.display = "flex";
       viewerFrame.style.display = "unset";
@@ -89,7 +95,7 @@
     window.location.hash = path;
   }
 
-  const examples = {
+  const exampleSources = {
     "Playground": "playground",
     "PBR - Interactive": "pbr-interactive",
     "PBR - Materials": "pbr-materials",
@@ -98,7 +104,7 @@
   }
   
   // autogenerate examples
-  for (const [name, src] of Object.entries(examples)) {
+  for (const [name, src] of Object.entries(exampleSources)) {
     const example = document.createElement("div");
     example.className = "example";
     example.onclick = function() {changeView("examples/" + src + "/index.html")};
@@ -107,7 +113,7 @@
       <div>${name}</div>
     `;
 
-    document.getElementById("examples").appendChild(example);
+    examplesContainer.appendChild(example);
   }
 </script>
 

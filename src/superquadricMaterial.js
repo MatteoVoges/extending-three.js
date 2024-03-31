@@ -1,5 +1,9 @@
 import * as THREE from "three";
 
+import { vertexShader } from "./superquadricShader.glsl.js";
+import { instancedVertexShader } from "./superquadricInstanceShader.glsl.js";
+
+
 export class ExtendedSuperquadricBufferGeometry extends THREE.BufferGeometry {
 	constructor (widthSegments = 32, heightSegments = 16) {
 		super();
@@ -81,7 +85,6 @@ export class ExtendedSuperquadricBufferGeometry extends THREE.BufferGeometry {
 	}
 }
 
-const vertexShader = await fetch("/src/superquadricShader.glsl").then(response => response.text());
 
 export class SuperquadricMaterial extends THREE.ShaderMaterial {
 	constructor (parameters) {
@@ -103,8 +106,6 @@ export class SuperquadricMaterial extends THREE.ShaderMaterial {
 	}
 }
 
-
-const instancedVertexShader = await fetch("/src/superquadricInstanceShader.glsl").then(response => response.text()); 
 
 export class SuperquadricInstanceMaterial extends THREE.ShaderMaterial {
 	constructor (parameters) {

@@ -1,3 +1,4 @@
+export const vertexShader = /* glsl */`
 precision highp float;
 
 attribute float eta;
@@ -50,4 +51,4 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(superquadricPosition, 1.0);
     vViewPosition = -mvPosition.xyz;
     vWorldPosition = (modelMatrix * vec4(superquadricPosition, 1.0)).xyz;
-}
+}`;

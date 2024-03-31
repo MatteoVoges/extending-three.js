@@ -60,8 +60,8 @@ function resizeCanvas() {
 function setBackgroundColor() {
 	let backgroundColor = 0xffffff;
 
-	let darkTheme = parent.document.getElementById("theme-switch");
-	darkTheme = darkTheme != null ? darkTheme.checked : false;
+	let darkTheme = parent.document.getElementById("theme-switch-checkbox");
+	darkTheme = darkTheme != null ? !darkTheme.checked : true;
 	if (darkTheme) backgroundColor = 0x000000;
 
 	renderer.setClearColor(new THREE.Color(backgroundColor), 1);

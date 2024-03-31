@@ -1,3 +1,4 @@
+export const instancedVertexShader = /* glsl */`
 precision highp float;
 
 attribute float eta;
@@ -6,8 +7,6 @@ attribute float u;
 
 attribute float epsilon1;
 attribute float epsilon2;
-
-// attribute vec3 instancePosition;
 
 varying vec3 vViewPosition;
 varying vec3 vNormal;
@@ -34,8 +33,6 @@ void main() {
     superquadricPosition.z = signed_pow(sin(eta), epsilon1) * signed_pow(sin(omega), epsilon2);
     if (u == 1.0) superquadricPosition.z = 0.0;
 
-    // superquadricPosition += instancePosition;
-
     gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(superquadricPosition, 1.0);
 
 
@@ -54,4 +51,4 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(superquadricPosition, 1.0);
     vViewPosition = -mvPosition.xyz;
     vWorldPosition = (modelMatrix * vec4(superquadricPosition, 1.0)).xyz;
-}
+}`;

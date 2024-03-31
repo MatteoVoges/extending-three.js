@@ -54,7 +54,7 @@ body {
     fill: rgb(var(--primary-color));
 }
 
-#theme-switch {
+#theme-switch-checkbox {
     display: none;
 }
 

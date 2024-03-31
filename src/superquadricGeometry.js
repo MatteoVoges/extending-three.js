@@ -89,9 +89,8 @@ class SuperquadricGeometry extends BufferGeometry {
 				normal.normalize();
 				normals.push(normal.x, normal.y, normal.z);
 
-				// uv
+				// uv (calculate uv from coordinates / mapped sphere angles)
 
-				// calculate uv from coordinates / mapped sphere angles
 				const latitude = Math.atan2(vertex.z, vertex.x);
 				const longitude = Math.acos(vertex.y / vertex.length());
 
@@ -153,7 +152,6 @@ class SuperquadricGeometry extends BufferGeometry {
 			data.phiLength,
 			data.thetaStart,
 			data.thetaLength,
-			data.post_uv,
 		);
 	}
 }
