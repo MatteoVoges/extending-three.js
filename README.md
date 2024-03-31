@@ -35,6 +35,8 @@ or visit the [Demo Page](https://matteovoges.github.io/extending-three.js/) host
 ## Video
 
 
+https://github.com/MatteoVoges/extending-three.js/assets/98756476/abde75fc-98d7-4388-babf-c41af78f210e
+
 
 ## State of Integration
 
