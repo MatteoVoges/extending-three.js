@@ -3,7 +3,9 @@
 <!-- hpi logo -->
 [<div style="text-align: right"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/HPI_logo.svg" height="50em"/></div>](https://www.hpi.de)
 
-This project is part of this project-seminar-lecture _3D Computer Graphics: Extending the Three.js Framework_ at the [Hasso-Plattner-Institute](https://hpi.de/en/index.html) (HPI). The goal of this project is introducing superquadrics as a new geometry type in three.js and take care of possible compability issues. This Project 
+This project is part of this project-seminar-lecture _3D Computer Graphics: Extending the Three.js Framework_ at the [Hasso-Plattner-Institute](https://hpi.de/en/index.html) (HPI). The goal of this project is introducing superquadrics as a new geometry type in three.js and take care of possible compability issues.
+
+Visit the projects website at [https://hpicgs.github.io/seminar-extending-threejs-2023/](https://hpicgs.github.io/seminar-extending-threejs-2023/)
 
 ## What is a superquadric?
 
@@ -16,8 +18,7 @@ Examples for different parametrizations (the two parameters $\epsilon_1$ and $\e
 <img width="500px" heigth="500px" src="https://superquadrics.com/data/superquadrics_all.png">
 
 
-Their ability to model various shapes with few parameters makes them a natural choice for geometric primitives. [Source: <a href=https://superquadrics.com/ >superquadrics.com</a>]
-</div>
+Their ability to model various shapes with few parameters makes them a natural choice for geometric primitives. [Source: https://superquadrics.com/](https://superquadrics.com/)
 
 ## Demo 
 
@@ -46,4 +47,4 @@ https://github.com/MatteoVoges/extending-three.js/assets/98756476/abde75fc-98d7-
 
 The Code is released under the MIT License. The License can be found in the LICENSE file.
 
-Copyright (c) 2023 Matteo Voges
+Copyright (c) 2023-2024 Matteo Voges
