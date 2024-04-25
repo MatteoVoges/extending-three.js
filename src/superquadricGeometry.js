@@ -3,7 +3,7 @@ import { BufferGeometry, Vector3, Float32BufferAttribute } from "three";
 // avoid floating point precision errors
 const tolerance = 1e-15;
 
-function signed_pow(x, y) {
+function signedPow(x, y) {
 	// round to next integer
 	if ( Math.abs(Math.round(x) - x) < tolerance ) x = Math.round(x);
 
@@ -68,23 +68,27 @@ class SuperquadricGeometry extends BufferGeometry {
 
 			const eta = thetaStart + (iy / heightSegments) * thetaLength;
 
+			const signedPowSinEta = signedPow(Math.sin(eta), epsilon_1);
+			const signedPowSinEtaNormal = signedPow(Math.sin(eta), 2 - epsilon_1);
+
+			vertex.y = signedPow(Math.cos(eta), epsilon_1);
+			normal.y = signedPow(Math.cos(eta), 2 - epsilon_1);
+
 			for (let ix = 0; ix <= widthSegments; ix++) {
 
 				const omega = phiStart + (ix / widthSegments) * phiLength;
 
 				// vertex
 
-				vertex.x = - signed_pow(Math.sin(eta), epsilon_1) * signed_pow(Math.cos(omega), epsilon_2);
-				vertex.y = signed_pow(Math.cos(eta), epsilon_1);
-				vertex.z = signed_pow(Math.sin(eta), epsilon_1) * signed_pow(Math.sin(omega), epsilon_2);
+				vertex.x = - signedPowSinEta * signedPow(Math.cos(omega), epsilon_2);
+				vertex.z = signedPowSinEta * signedPow(Math.sin(omega), epsilon_2);
 
 				vertices.push(vertex.x, vertex.y, vertex.z);
 
 				// normal
 
-				normal.x = - signed_pow(Math.sin(eta), 2 - epsilon_1) * signed_pow(Math.cos(omega), 2 - epsilon_2);
-				normal.y = signed_pow(Math.cos(eta), 2 - epsilon_1);
-				normal.z = signed_pow(Math.sin(eta), 2 - epsilon_1) * signed_pow(Math.sin(omega), 2 - epsilon_2);
+				normal.x = - signedPowSinEtaNormal * signedPow(Math.cos(omega), 2 - epsilon_2);
+				normal.z = signedPowSinEtaNormal * signedPow(Math.sin(omega), 2 - epsilon_2);
 
 				normal.normalize();
 				normals.push(normal.x, normal.y, normal.z);
